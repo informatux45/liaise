@@ -70,9 +70,7 @@ if( empty($_POST['submit']) ){
 			}
 		}
 	} else {
-		if ($form_id == 5) {
 
-		}
 		if( !$form =& $liaise_form_mgr->get($form_id) ){
 			header("Location: ".LIAISE_URL);
 			exit();
