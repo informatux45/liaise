@@ -1,12 +1,14 @@
 <?php
 define("_AM_LIAISE_MODULEADMIN_MISSING","La classe ModuleAdmin n'est pas présente, installez là sur votre xoops.<br />/Frameworks/moduleclasses/moduleadmin/");
 defined("_AM_DBUPDATED") or define("_AM_DBUPDATED","Base mise &#224; jour avec succ&#232;s!");
+defined("_AM_DBERROR") or define("_AM_DBERROR","Erreur lors de la mise &#224; jour");
 
 // $Id: admin.php 26 2005-09-04 09:52:40Z tuff $
 define("_AM_SAVE",                          "Enregistrer");
 define("_AM_COPIED",                        "%s copi&#233;");
 define("_AM_ELE_CREATE",                    "Cr&#233;er un &#233;l&#233;ment de formulaire");
 define("_AM_ELE_EDIT",                      "Editer les &#233;l&#233;ments du formulaire: %s");
+define("_AM_ELE_VIEW",                      "Visualiser");
 
 define("_AM_ELE_CAPTION",                   "Titre");
 define("_AM_ELE_DEFAULT",                   "Valeur par d&#233;faut");
@@ -114,6 +116,18 @@ define("_AM_XLIAISE_INDEX_ACTIVATED_FORM",  "Formulaire activ&#233; : <span styl
 define("_AM_XLIAISE_INDEX_ACTIVATED_FORMS", "Formulaires activ&#233;s : <span style='color: green; font-weight: bold'>%s</span>");
 define("_AM_XLIAISE_INDEX_OFFLINE_FORM",    "Formulaire d&#233;sactiv&#233; : <span style='color: red; font-weight: bold'>%s</span>");
 define("_AM_XLIAISE_INDEX_OFFLINE_FORMS",   "Formulaires d&#233;sactiv&#233;s : <span style='color: red; font-weight: bold'>%s</span>");
+
+define("_AM_XLIAISE_ARCHIVE_ALL_POSTED_MSG","Tous les messages post&#233;s sur les formulaires");
+define("_AM_XLIAISE_ARCHIVE_ALL_DATE",      "Date");
+define("_AM_XLIAISE_ARCHIVE_ALL_FORM",      "Formulaire");
+define("_AM_XLIAISE_ARCHIVE_ALL_MESSAGE",   "Message");
+define("_AM_XLIAISE_ARCHIVE_ALL_NO_MSG",    "Pas de message pour les formulaires");
+
+define("_AM_XLIAISE_ARCHIVE_VIEW_DATE",     "Date");
+define("_AM_XLIAISE_ARCHIVE_VIEW_FORM",     "Formulaire");
+define("_AM_XLIAISE_ARCHIVE_VIEW_MESSAGE",  "Message");
+
+define("_AM_XLIAISE_ARCHIVE_DELETE_CONFIRM","Etes vous s&#251;r de vouloir supprimer ce message ?");
 
 /**
  * @translation     AFUX (Association Francophone des Utilisateurs de Xoops) 

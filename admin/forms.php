@@ -156,14 +156,14 @@ switch($op){
 					<td class="odd" align="center">'.truncate(strip_tags($row['form_message']), 40, '..').'</td>
 					<td class="odd">
 						<ul>
-							<li><a href="#" onclick="window.open(\''._LIAISE_ADMIN_URL.'forms.php?op=archive_view&amp;form_id='.$row['form_id'].'&amp;msg_id='.$row['id'].'\', \'Message\', \'menubar=no, status=no, scrollbars=yes, menubar=no, width=550, height=420\');">Visualiser</a></li>
+							<li><a href="#" onclick="window.open(\''._LIAISE_ADMIN_URL.'forms.php?op=archive_view&amp;form_id='.$row['form_id'].'&amp;msg_id='.$row['id'].'\', \'Message\', \'menubar=no, status=no, scrollbars=yes, menubar=no, width=550, height=420\');">'._AM_ELE_VIEW.'</a></li>
 							<li><a href="'._LIAISE_ADMIN_URL.'forms.php?op=archive_delete&amp;msg_id='.$row['id'].'&amp;XOOPS_G_TICKET='.$ticket.'">'._DELETE.'</a></li>
 				 		</ul>
 					</td>
 					</tr>';
 			}
 		} else {
-			echo '<tr><th colspan="4" class="odd"><span style="font-size: 1.2em; font-weight: bold; color: red;">Pas de message pour ce formulaire</span></th></tr>';
+			echo '<tr><th colspan="4" class="odd"><span style="font-size: 1.2em; font-weight: bold; color: red;">'._AM_XLIAISE_ARCHIVE_ALL_NO_MSG.'</span></th></tr>';
 		}
 
 		echo '</table>';
@@ -177,12 +177,12 @@ switch($op){
 		$archive = dbResultToArray($result);
 
 		echo '<table class="outer" cellspacing="1" width="100%">
-			<tr><th colspan="5">Tous les messages post&eacute;s sur les formulaires</th></tr>
+			<tr><th colspan="5">'._AM_XLIAISE_ARCHIVE_ALL_POSTED_MSG.'</th></tr>
 			<tr>
 				<td class="head" align="center">'._AM_ID.'</td>
-				<td class="head" align="center">Date</td>
-				<td class="head" align="center">Formulaire</td>
-				<td class="head" align="center">Message</td>
+				<td class="head" align="center">'._AM_XLIAISE_ARCHIVE_ALL_DATE.'</td>
+				<td class="head" align="center">'._AM_XLIAISE_ARCHIVE_ALL_FORM.'</td>
+				<td class="head" align="center">'._AM_XLIAISE_ARCHIVE_ALL_MESSAGE.'</td>
 				<td class="head" align="center">'._AM_ACTION.'</td>
 			</tr>';
 		
@@ -191,13 +191,9 @@ switch($op){
 			$ticket = $xoopsGTicket->issue( __LINE__ );
 			// ----------------------------
 			foreach($archive as $row) {
-				if ($row['form_id'] == '0') {
-					$form_name['form_title'] = 'Demande de rappel';
-				} else {
-					$form_name_sql = 'SELECT form_title FROM '.$xoopsDB->prefix("xliaise_forms").' WHERE form_id = "'.$row['form_id'].'"';
-					$result_name   = $xoopsDB->query($form_name_sql);
-					$form_name     = $xoopsDB->fetchArray($result_name);
-				}
+				$form_name_sql = 'SELECT form_title FROM '.$xoopsDB->prefix("xliaise_forms").' WHERE form_id = "'.$row['form_id'].'"';
+				$result_name   = $xoopsDB->query($form_name_sql);
+				$form_name     = $xoopsDB->fetchArray($result_name);
 
 				echo '<tr>
 					<td class="odd" align="center">'.$row['id'].'</td>
@@ -213,7 +209,7 @@ switch($op){
 					</tr>';
 			}
 		} else {
-			echo '<tr><th colspan="5" class="odd"><span style="font-size: 1.2em; font-weight: bold; color: red;">Pas de message pour les formulaires</span></th></tr>';
+			echo '<tr><th colspan="5" class="odd"><span style="font-size: 1.2em; font-weight: bold; color: red;">'._AM_XLIAISE_ARCHIVE_ALL_NO_MSG.'</span></th></tr>';
 		}
 
 		echo '</table>';
@@ -235,9 +231,9 @@ switch($op){
                 $result_name   = $xoopsDB->query($form_name_sql);
                 $form_name     = $xoopsDB->fetchArray($result_name);
 
-		echo '<u>FORMULAIRE :</u> '.$form_name['form_title'];
-		echo '<br><br><u>DATE :</u> '.formatDate($msg_info['form_date']);
-		echo '<br><br><u>MESSAGE :</u><br>';
+		echo '<u>'._AM_XLIAISE_ARCHIVE_VIEW_FORM.' :</u> '.$form_name['form_title'];
+		echo '<br><br><u>'._AM_XLIAISE_ARCHIVE_VIEW_DATE.' :</u> '.formatDate($msg_info['form_date']);
+		echo '<br><br><u>'._AM_XLIAISE_ARCHIVE_VIEW_MESSAGE.' :</u><br>';
 		echo nl2br($msg_info['form_message']);
 	break;
 
@@ -253,7 +249,7 @@ switch($op){
 			adminHtmlHeader('forms.php');
 			// --- GIJOE's Ticket Class ---	
 			$ticket = $xoopsGTicket->issue( __LINE__ );
-			xoops_confirm(array('op' => 'archive_delete', 'msg_id' => $_GET['msg_id'], 'ok' => 1, 'XOOPS_G_TICKET' => $ticket ), _LIAISE_ADMIN_URL . 'forms.php', 'Etes vous s&ucirc;r de vouloir supprimer ce message ?');
+			xoops_confirm(array('op' => 'archive_delete', 'msg_id' => $_GET['msg_id'], 'ok' => 1, 'XOOPS_G_TICKET' => $ticket ), _LIAISE_ADMIN_URL . 'forms.php', _AM_XLIAISE_ARCHIVE_DELETE_CONFIRM);
 			// ----------------------------
 		} else {
 			// --- GIJOE's Ticket Class ---	
@@ -271,7 +267,7 @@ switch($op){
 			$sql = 'DELETE FROM ' . $xoopsDB->prefix('xliaise_forms_archive') . ' WHERE id = "'.$msg_id.'"';
 			$result = $xoopsDB->query($sql);
 			if (!$result)
-				redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 3, 'Erreur lors de la mise a jour');
+				redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 3, _AM_DBERROR);
 			else
 				redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 3, _AM_DBUPDATED);
 		}
