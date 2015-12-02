@@ -206,7 +206,7 @@ switch($op){
 					<td class="even" align="center">'.truncate(strip_tags($row['form_message']), 40, '..').'</td>
 					<td class="odd">
 						<ul>
-							<li><a href="#" onclick="window.open(\''._LIAISE_ADMIN_URL.'forms.php?op=archive_view&amp;form_id='.$row['form_id'].'&amp;msg_id='.$row['id'].'\', \'Message\', \'menubar=no, status=no, scrollbars=yes, menubar=no, width=550, height=620\');">Visualiser</a></li>
+							<li><a href="#" onclick="window.open(\''._LIAISE_ADMIN_URL.'forms.php?op=archive_view&amp;form_id='.$row['form_id'].'&amp;msg_id='.$row['id'].'\', \'Message\', \'menubar=no, status=no, scrollbars=yes, menubar=no, width=550, height=620\');">'._AM_ELE_DISPLAY.'</a></li>
 							<li><a href="'._LIAISE_ADMIN_URL.'forms.php?op=archive_delete&amp;msg_id='.$row['id'].'&amp;XOOPS_G_TICKET='.$ticket.'">'._DELETE.'</a></li>
 				 		</ul>
 					</td>
