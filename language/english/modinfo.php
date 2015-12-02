@@ -19,48 +19,48 @@ define("_MI_LIAISE_ADMENU5","About");
 define("_MI_LIAISE_ADMENU6","Synthesis");
 
 //	preferences
-define("_MI_LIAISE_TEXT_WIDTH","Largeur par d&#233;faut des zones de texte");
-define("_MI_LIAISE_TEXT_MAX","Longueur maximale par d&#233;faut des zones de texte");
-define("_MI_LIAISE_TAREA_ROWS","Rang&#233;es de zones de texte par d&#233;fault");
-define("_MI_LIAISE_TAREA_COLS","Colonnes de zones de texte par d&#233;faut");
+define("_MI_LIAISE_TEXT_WIDTH","Default width textarea");
+define("_MI_LIAISE_TEXT_MAX","Maximum length default textarea");
+define("_MI_LIAISE_TAREA_ROWS","Default textarea rows");
+define("_MI_LIAISE_TAREA_COLS","Default textarea Columns");
 
 ######### version 1.1  additions #########
 //	preferences
-define("_MI_LIAISE_MAIL_CHARSET","Encodage du texte pour l&#39;envoi des emails");
+define("_MI_LIAISE_MAIL_CHARSET","Text Encoding for sending emails");
 
 //	template descriptions
-define("_MI_LIAISE_TMPL_MAIN_DESC",     "Page d&#39;accueil du module");
-define("_MI_LIAISE_TMPL_ERROR_DESC",    "Page &#224; afficher lorsqu&#39;une erreur est d&#233;tect&#233;e");
+define("_MI_LIAISE_TMPL_MAIN_DESC",     "Homepage module");
+define("_MI_LIAISE_TMPL_ERROR_DESC",    "Page to display when an error is detected");
 define("_MI_LIAISE_TMPL_HEADER_DESC",   "Header Template File");
 
 ######### version 1.2 additions #########
 //	template descriptions
-define("_MI_LIAISE_TMPL_FORM_DESC","Template pour formulaires");
+define("_MI_LIAISE_TMPL_FORM_DESC","Template for forms");
 
 //	preferences
-define("_MI_LIAISE_MOREINFO","Envoyer des informations suppl&#233;mentaires, ainsi que les donn&#233;es pr&#233;sent&#233;es");
-define("_MI_LIAISE_MOREINFO_USER","Nom d&#39;utilisateur et URL de la page d&#39;informations sur l&#39;utilisateur");
-define("_MI_LIAISE_MOREINFO_IP","Soumettre par addresse IP");
-define("_MI_LIAISE_MOREINFO_AGENT","infos navigateur");
-define("_MI_LIAISE_MOREINFO_FORM","URL du formulaire pr&#233;sent&#233;");
-define("_MI_LIAISE_MAIL_CHARSET_DESC","Laissez en blanc pour "._CHARSET);
-define("_MI_LIAISE_PREFIX","Texte de pr&#233;fixe pour des champs obligatoires");
-define("_MI_LIAISE_SUFFIX","Suffixe de texte des champs requis");
-define("_MI_LIAISE_INTRO","Texte d&#39;introduction de la page principale");
-define("_MI_LIAISE_GLOBAL","Texte &#224; afficher dans chaque page de formulaire");
+define("_MI_LIAISE_MOREINFO","Send additional information and data presented");
+define("_MI_LIAISE_MOREINFO_USER","User name and URL of the User Information page");
+define("_MI_LIAISE_MOREINFO_IP","Submit by IP");
+define("_MI_LIAISE_MOREINFO_AGENT","Browser infos");
+define("_MI_LIAISE_MOREINFO_FORM","URL submitted form");
+define("_MI_LIAISE_MAIL_CHARSET_DESC","Leave blank to "._CHARSET);
+define("_MI_LIAISE_PREFIX","Prefix text for required fields");
+define("_MI_LIAISE_SUFFIX","Text suffix required fields");
+define("_MI_LIAISE_INTRO","Intro text of the main page");
+define("_MI_LIAISE_GLOBAL","Text to be displayed in each form page");
 
 ######### version 1.21 additions #########
 // preferences default values
-define("_MI_LIAISE_INTRO_DEFAULT","N&#39;h&#233;sitez pas &#224; nous contacter par les moyens suivants:");
-define("_MI_LIAISE_GLOBAL_DEFAULT","<strong>* Requis</strong>");
+define("_MI_LIAISE_INTRO_DEFAULT","Do not hesitate to contact us through the following means:");
+define("_MI_LIAISE_GLOBAL_DEFAULT","<strong>* Required</strong>");
 
 ######### version 1.23 additions #########
-define("_MI_LIAISE_UPLOADDIR","Chemin d&#39;acc&#232;s physique pour stocker les fichiers t&#233;l&#233;charg&#233;s SANS slash");
-define("_MI_LIAISE_UPLOADDIR_DESC","tous les fichiers envoy&#233; via un message priv&#233; seront stock&#233;s dans ce dossier ");
+define("_MI_LIAISE_UPLOADDIR","Physical path to store downloaded files WITHOUT slash");
+define("_MI_LIAISE_UPLOADDIR_DESC","all files via a private message will be stored in this folder ");
 
 // --- captcha ---
 define("_MI_LIAISE_CAPTCHA","Captcha: Anti-Spam");
-define("_MI_LIAISE_CAPTCHA_DESC","Cliquez sur oui, pour valider captcha");
+define("_MI_LIAISE_CAPTCHA_DESC","Click Yes, to validate captcha");
 
 ######### version 2.0 #########
 define("_MI_LIAISE_BREADCRUMB", "Breadcrumb");

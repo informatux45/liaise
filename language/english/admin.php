@@ -1,6 +1,6 @@
 <?php
 define("_AM_LIAISE_MODULEADMIN_MISSING","The ModuleAdmin class is not installed, install it on your xoops.<br />/Frameworks/moduleclasses/moduleadmin/");
-defined("_AM_DBUPDATED") or define("_AM_DBUPDATED","Database updated!");
+defined("_AM_DBUPDATED") or define("_AM_DBUPDATED","Database updated successfully!");
 
 // $Id: admin.php 26 2005-09-04 09:52:40Z tuff $
 define("_AM_SAVE",                          "Save");
