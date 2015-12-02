@@ -31,3 +31,7 @@ ul.xliaise_editelement li {
     padding: 5px;
     text-align: center;
 }
+
+.xliaise_img_captcha:hover {
+    cursor: pointer;
+}

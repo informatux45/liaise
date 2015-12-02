@@ -72,7 +72,7 @@ if ( $xoopsModuleConfig['captcha'] ) {
 	$server   = LIAISE_URL."server.php";
 	$onclick  = "javasript:this.src='". $server ."?'+Math.random();";
 	$captcha  = _LIAISE_CAPTCHA_DESC ."<br />\n";
-	$captcha .= '<img src="'. $server .'" onclick="'. $onclick .'" alt="CAPTCHA image" style="padding: 3px" />'."<br />\n";
+	$captcha .= '<img class="xliaise_img_captcha" src="'. $server .'" onclick="'. $onclick .'" alt="CAPTCHA image" style="padding: 3px" />'."<br />\n";
 	$captcha .= '<input name="captcha" type="text" />';
 	$form_output->addElement( new XoopsFormLabel(_LIAISE_CAPTCHA, $captcha) );
 }
