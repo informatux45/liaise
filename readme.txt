@@ -44,7 +44,9 @@ admin can choice use or not use in admin page
 changed charset EUC-JP to ISO-2022-JP
 - xoops_version.php
 
-(5) support PHP5
+(5) support PHP7
 Notice [PHP]: Only variable references should be returned by reference
 - class/elements.php
 
+(6) Xoops version
+Only for XOOPS 2.5.8 and up
