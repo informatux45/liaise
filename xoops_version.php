@@ -54,12 +54,12 @@ $modversion['system_menu']    = 1;
 
 // About
 $modversion["module_website_url"]  = "//www.brandycoke.com/";
-$modversion["module_website_name"] = "Brandycoke Productions <a href='//www.informatux.com/'>& maintened by INFORMATUX</a>";
-$modversion['release_date']        = '2015/11/18';
+$modversion["module_website_name"] = "Brandycoke Productions <a href='https://www.informatux.com/' target='_blank'>& maintened by INFORMATUX</a>";
+$modversion['release_date']        = '2017/03/22';
 $modversion["status_version"]      = "Stable";
 $modversion["module_status"]       = "FINAL";
-$modversion['min_php']             = '5.2';
-$modversion['min_xoops']           = "2.5.0";
+$modversion['min_php']             = '7.0';
+$modversion['min_xoops']           = "2.5.8";
 $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
 
@@ -67,7 +67,7 @@ $modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.
 $modversion['contributors']['developers'][0]['name']    = "Patrice Bouthier";
 $modversion['contributors']['developers'][0]['uname']   = "webmaster";
 $modversion['contributors']['developers'][0]['email']   = "contact@informatux.com";
-$modversion['contributors']['developers'][0]['website'] = "//www.informatux.com";
+$modversion['contributors']['developers'][0]['website'] = "https://www.informatux.com";
 
 // Sql file
 $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
