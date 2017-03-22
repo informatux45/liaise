@@ -100,7 +100,7 @@ if( !isset($_POST['op']) || $_POST['op'] != 'save' ) {
 	if( $elements =& $liaise_ele_mgr->getObjects($criteria) ){
 		foreach( $elements as $i ){
 			$id = $i->getVar('ele_id');
-			$renderer =& new LiaiseElementRenderer($i);
+			$renderer = new LiaiseElementRenderer($i);
 			$ele_type = $i->getVar('ele_type');
 			$req = $i->getVar('ele_req');
 			$check_req = new XoopsFormCheckBox('', 'ele_req['.$id.']', $req);
