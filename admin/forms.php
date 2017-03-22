@@ -69,7 +69,7 @@ switch($op){
 
 			foreach ($forms as $f){
 				$id = $f->getVar('form_id');
-				$order =& new XoopsFormText('', 'order['.$id.']', 3, 2, $f->getVar('form_order'));
+				$order = new XoopsFormText('', 'order['.$id.']', 3, 2, $f->getVar('form_order'));
 				$group_mgr =& xoops_gethandler('group');
 				$sendto = $f->getVar('form_send_to_group');
 				if( false != $sendto && $group =& $group_mgr->get($sendto) ){
@@ -77,7 +77,7 @@ switch($op){
 				}else{
 					$sendto = _AM_FORM_SENDTO_ADMIN;
 				}
-				$ids =& new XoopsFormHidden('ids[]', $id);
+				$ids = new XoopsFormHidden('ids[]', $id);
 
 				echo '
 					<tr>
@@ -118,7 +118,7 @@ switch($op){
 			echo $xoopsGTicket->getTicketHtml( __LINE__ );
 // ------
 
-			$hidden =& new XoopsFormHidden('op', 'saveorder');
+			$hidden = new XoopsFormHidden('op', 'saveorder');
 			echo $hidden->render()."\n</form>\n";
                 }
 		adminHtmlFooter();
