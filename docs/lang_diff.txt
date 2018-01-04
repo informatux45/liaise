@@ -1,0 +1,12 @@
+LANGUAGE DIFFERENCES
+=====================
+
+Below are language differences from a version to next version.
+
+Version 2.01
+----------------
+
+admin.php
+----------
+
+define("_AM_XLIAISE_NO_MESSAGES", "No messages for the form");
