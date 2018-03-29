@@ -41,7 +41,7 @@ switch ($op) {
     case 'list':
     default:
         adminHtmlHeader();
-        $criteria = new Criteria(1, 1);
+        $criteria = new \Criteria(1, 1);
         $criteria->setSort('form_order');
         $criteria->setOrder('ASC');
         if ($forms = $liaise_form_mgr->getObjects($criteria, 'admin_list')) {
@@ -57,7 +57,7 @@ switch ($op) {
                     </tr>';
             foreach ($forms as $f) {
                 $id        = $f->getVar('form_id');
-                $order     = new XoopsFormText('', 'order[' . $id . ']', 3, 2, $f->getVar('form_order'));
+                $order     = new \XoopsFormText('', 'order[' . $id . ']', 3, 2, $f->getVar('form_order'));
                 $group_mgr = xoops_getHandler('group');
                 $sendto    = $f->getVar('form_send_to_group');
                 if (false != $sendto && $group =& $group_mgr->get($sendto)) {
@@ -65,7 +65,7 @@ switch ($op) {
                 } else {
                     $sendto = _AM_FORM_SENDTO_ADMIN;
                 }
-                $ids = new XoopsFormHidden('ids[]', $id);
+                $ids = new \XoopsFormHidden('ids[]', $id);
                 echo '
                     <tr>
                         <td class="odd" align="center">' . $id . '</td>
@@ -80,7 +80,7 @@ switch ($op) {
                         </ul>' . $ids->render() . '</td>
                     </tr>';
             }
-            $submit = new XoopsFormButton('', 'submit', _AM_RESET_ORDER, 'submit');
+            $submit = new \XoopsFormButton('', 'submit', _AM_RESET_ORDER, 'submit');
             echo '
                     <tr>
                         <td class="foot">&nbsp;</td>
@@ -88,7 +88,7 @@ switch ($op) {
                         <td class="foot" colspan="3">&nbsp;</td>
                     </tr>
                     </table>';
-            $hidden = new XoopsFormHidden('op', 'saveorder');
+            $hidden = new \XoopsFormHidden('op', 'saveorder');
             echo $hidden->render() . "\n</form>\n";
         }
         break;
@@ -103,42 +103,42 @@ switch ($op) {
             $form = $liaise_form_mgr->create();
         }
 
-        $text_form_title = new XoopsFormText(_AM_FORM_TITLE, 'form_title', 50, 255, $form->getVar('form_title', 'e'));
+        $text_form_title = new \XoopsFormText(_AM_FORM_TITLE, 'form_title', 50, 255, $form->getVar('form_title', 'e'));
 
         $group_ids              = $modulepermHandler->getGroupIds($liaise_form_mgr->perm_name, $form_id, $xoopsModule->getVar('mid'));
-        $select_form_group_perm = new XoopsFormSelectGroup(_AM_FORM_PERM, 'form_group_perm', true, $group_ids, 5, true);
+        $select_form_group_perm = new \XoopsFormSelectGroup(_AM_FORM_PERM, 'form_group_perm', true, $group_ids, 5, true);
 
-        $select_form_send_method = new XoopsFormSelect(_AM_FORM_SEND_METHOD, 'form_send_method', $form->getVar('form_send_method'));
+        $select_form_send_method = new \XoopsFormSelect(_AM_FORM_SEND_METHOD, 'form_send_method', $form->getVar('form_send_method'));
         $select_form_send_method->addOption('e', _AM_FORM_SEND_METHOD_MAIL);
         $select_form_send_method->addOption('p', _AM_FORM_SEND_METHOD_PM);
         $select_form_send_method->setDescription(_AM_FORM_SEND_METHOD_DESC);
 
-        $select_form_send_to_group = new XoopsFormSelectGroup(_AM_FORM_SENDTO, 'form_send_to_group', false, $form->getVar('form_send_to_group'));
+        $select_form_send_to_group = new \XoopsFormSelectGroup(_AM_FORM_SENDTO, 'form_send_to_group', false, $form->getVar('form_send_to_group'));
         $select_form_send_to_group->addOption('0', _AM_FORM_SENDTO_ADMIN);
 
-        $select_form_delimiter = new XoopsFormSelect(_AM_FORM_DELIMETER, 'form_delimiter', $form->getVar('form_delimiter'));
+        $select_form_delimiter = new \XoopsFormSelect(_AM_FORM_DELIMETER, 'form_delimiter', $form->getVar('form_delimiter'));
         $select_form_delimiter->addOption('s', _AM_FORM_DELIMETER_SPACE);
         $select_form_delimiter->addOption('b', _AM_FORM_DELIMETER_BR);
 
-        $text_form_order = new XoopsFormText(_AM_FORM_ORDER, 'form_order', 3, 2, $form->getVar('form_order'));
+        $text_form_order = new \XoopsFormText(_AM_FORM_ORDER, 'form_order', 3, 2, $form->getVar('form_order'));
         $text_form_order->setDescription(_AM_FORM_ORDER_DESC);
 
         $submit_text           = $form->getVar('form_submit_text');
-        $text_form_submit_text = new XoopsFormText(_AM_FORM_SUBMIT_TEXT, 'form_submit_text', 50, 50, empty($submit_text) ? _SUBMIT : $submit_text);
+        $text_form_submit_text = new \XoopsFormText(_AM_FORM_SUBMIT_TEXT, 'form_submit_text', 50, 50, empty($submit_text) ? _SUBMIT : $submit_text);
 
-        $tarea_form_desc = new XoopsFormDhtmlTextArea(_AM_FORM_DESC, 'form_desc', $form->getVar('form_desc', 'e'), 5);
+        $tarea_form_desc = new \XoopsFormDhtmlTextArea(_AM_FORM_DESC, 'form_desc', $form->getVar('form_desc', 'e'), 5);
         $tarea_form_desc->setDescription(_AM_FORM_DESC_DESC);
 
-        $tarea_form_intro = new XoopsFormDhtmlTextArea(_AM_FORM_INTRO, 'form_intro', $form->getVar('form_intro', 'e'), 10);
+        $tarea_form_intro = new \XoopsFormDhtmlTextArea(_AM_FORM_INTRO, 'form_intro', $form->getVar('form_intro', 'e'), 10);
         $tarea_form_intro->setDescription(_AM_FORM_INTRO_DESC);
 
-        $text_form_whereto = new XoopsFormText(_AM_FORM_WHERETO, 'form_whereto', 50, 255, $form->getVar('form_whereto'));
+        $text_form_whereto = new \XoopsFormText(_AM_FORM_WHERETO, 'form_whereto', 50, 255, $form->getVar('form_whereto'));
         $text_form_whereto->setDescription(_AM_FORM_WHERETO_DESC);
 
-        $hidden_op = new XoopsFormHidden('op', 'saveform');
-        $submit    = new XoopsFormButton('', 'submit', _AM_SAVE, 'submit');
-        $submit1   = new XoopsFormButton('', 'submit', _AM_SAVE_THEN_ELEMENTS, 'submit');
-        $tray      = new XoopsFormElementTray('');
+        $hidden_op = new \XoopsFormHidden('op', 'saveform');
+        $submit    = new \XoopsFormButton('', 'submit', _AM_SAVE, 'submit');
+        $submit1   = new \XoopsFormButton('', 'submit', _AM_SAVE_THEN_ELEMENTS, 'submit');
+        $tray      = new \XoopsFormElementTray('');
         $tray->addElement($submit);
         $tray->addElement($submit1);
 
@@ -147,14 +147,14 @@ switch ($op) {
         } else {
             if ($clone) {
                 $caption         = sprintf(_AM_COPIED, $form->getVar('form_title'));
-                $clone_form_id   = new XoopsFormHidden('clone_form_id', $form_id);
-                $text_form_title = new XoopsFormText(_AM_FORM_TITLE, 'form_title', 50, 255, sprintf(_AM_COPIED, $form->getVar('form_title', 'e')));
+                $clone_form_id   = new \XoopsFormHidden('clone_form_id', $form_id);
+                $text_form_title = new \XoopsFormText(_AM_FORM_TITLE, 'form_title', 50, 255, sprintf(_AM_COPIED, $form->getVar('form_title', 'e')));
             } else {
                 $caption        = sprintf(_AM_FORM_EDIT, $form->getVar('form_title'));
-                $hidden_form_id = new XoopsFormHidden('form_id', $form_id);
+                $hidden_form_id = new \XoopsFormHidden('form_id', $form_id);
             }
         }
-        $output = new XoopsThemeForm($caption, 'editform', LIAISE_ADMIN_URL);
+        $output = new \XoopsThemeForm($caption, 'editform', LIAISE_ADMIN_URL);
         $output->addElement($text_form_title, true);
         $output->addElement($select_form_group_perm);
         $output->addElement($select_form_send_method);
@@ -188,7 +188,7 @@ switch ($op) {
             $form =& $liaise_form_mgr->get($form_id);
             $liaise_form_mgr->delete($form);
             $liaise_ele_mgr = xoops_getModuleHandler('elements');
-            $criteria       = new Criteria('form_id', $form_id);
+            $criteria       = new \Criteria('form_id', $form_id);
             $liaise_ele_mgr->deleteAll($criteria);
             $liaise_form_mgr->deleteFormPermissions($form_id);
             redirect_header(LIAISE_ADMIN_URL, 0, _AM_DBUPDATED);
@@ -237,7 +237,7 @@ switch ($op) {
             }
             if (!empty($clone_form_id)) {
                 $liaise_ele_mgr = xoops_getModuleHandler('elements');
-                $criteria       = new Criteria('form_id', $clone_form_id);
+                $criteria       = new \Criteria('form_id', $clone_form_id);
                 $count          = $liaise_ele_mgr->getCount($criteria);
                 if ($count > 0) {
                     $elements = $liaise_ele_mgr->getObjects($criteria);

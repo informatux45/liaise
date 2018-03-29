@@ -108,7 +108,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
         return false;
     }
 
-    public function insert(XoopsObject $form, $force = false)
+    public function insert(\XoopsObject $form, $force = false)
     {
         if (strtolower(get_class($form)) != strtolower($this->obj_class)) {
             return false;
@@ -186,7 +186,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
         return $form_id;
     }
 
-    public function delete(XoopsObject $form, $force = false)
+    public function delete(\XoopsObject $form, $force = false)
     {
         if (strtolower(get_class($form)) != strtolower($this->obj_class)) {
             return false;
@@ -226,7 +226,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
         if (!$result) {
             return false;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $forms = new $this->obj_class();
             $forms->assignVars($myrow);
             if (!$id_as_key) {
@@ -288,11 +288,11 @@ class LiaiseFormsHandler extends XoopsObjectHandler
     {
         global $xoopsUser, $xoopsModule, $modulepermHandler;
         $groups   = is_object($xoopsUser) ? $xoopsUser->getGroups() : 3;
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('form_order', 1, '>='), 'OR');
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('form_order', 1, '>='), 'OR');
         $criteria->setSort('form_order');
         $criteria->setOrder('ASC');
-        if ($forms = $this->getObjects($criteria, 'home_list')) {
+        if ($forms =& $this->getObjects($criteria, 'home_list')) {
             $ret = [];
             foreach ($forms as $f) {
                 if (false != $modulepermHandler->checkRight($this->perm_name, $f->getVar('form_id'), $groups, $xoopsModule->getVar('mid'))) {

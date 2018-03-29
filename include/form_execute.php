@@ -32,14 +32,19 @@
 ##  URL: http://www.brandycoke.com/                                          ##
 ##  Project: Liaise                                                          ##
 ###############################################################################
+
+use XoopsModules\Liaise;
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
+
 if (!defined('LIAISE_ROOT_PATH')) {
     exit();
 }
 
 $liaise_ele_mgr = xoops_getModuleHandler('elements');
-$criteria       = new CriteriaCompo();
-$criteria->add(new Criteria('form_id', $form->getVar('form_id')), 'AND');
-$criteria->add(new Criteria('ele_display', 1), 'AND');
+$criteria       = new \CriteriaCompo();
+$criteria->add(new \Criteria('form_id', $form->getVar('form_id')), 'AND');
+$criteria->add(new \Criteria('ele_display', 1), 'AND');
 $criteria->setSort('ele_order');
 $criteria->setOrder('ASC');
 $elements = $liaise_ele_mgr->getObjects($criteria, true);
@@ -199,7 +204,7 @@ $xoopsMailer = xoops_getMailer();
 $xoopsMailer->setTemplateDir($template_dir);
 $xoopsMailer->setTemplate('xliaise.tpl');
 $xoopsMailer->setSubject(sprintf(_LIAISE_MSG_SUBJECT, $myts->stripSlashesGPC($form->getVar('form_title'))));
-if (in_array('user', $xoopsModuleConfig['moreinfo'])) {
+if (in_array('user', $helper->getConfig('moreinfo'))) {
     if (is_object($xoopsUser)) {
         $xoopsMailer->assign('UNAME', sprintf(_LIAISE_MSG_UNAME, $xoopsUser->getVar('uname')));
         $xoopsMailer->assign('ULINK', sprintf(_LIAISE_MSG_UINFO, XOOPS_URL . '/userinfo.php?uid=' . $xoopsUser->getVar('uid')));
@@ -212,7 +217,7 @@ if (in_array('user', $xoopsModuleConfig['moreinfo'])) {
     $xoopsMailer->assign('ULINK', '');
 }
 
-if (in_array('ip', $xoopsModuleConfig['moreinfo'])) {
+if (in_array('ip', $helper->getConfig('moreinfo'))) {
     $proxy = $_SERVER['REMOTE_ADDR'];
     $ip    = '';
     if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -230,12 +235,12 @@ if (in_array('ip', $xoopsModuleConfig['moreinfo'])) {
 } else {
     $xoopsMailer->assign('IP', '');
 }
-if (in_array('agent', $xoopsModuleConfig['moreinfo'])) {
+if (in_array('agent', $helper->getConfig('moreinfo'))) {
     $xoopsMailer->assign('AGENT', sprintf(_LIAISE_MSG_AGENT, $_SERVER['HTTP_USER_AGENT']));
 } else {
     $xoopsMailer->assign('AGENT', '');
 }
-if (in_array('form', $xoopsModuleConfig['moreinfo'])) {
+if (in_array('form', $helper->getConfig('moreinfo'))) {
     $xoopsMailer->assign('FORMURL', sprintf(_LIAISE_MSG_FORMURL, LIAISE_URL . 'index.php?form_id=' . $form_id));
 } else {
     $xoopsMailer->assign('FORMURL', '');
@@ -252,7 +257,7 @@ if ('p' === $form->getVar('form_send_method') && is_object($xoopsUser) && false 
     if (isset($reply_mail)) {
         $xoopsMailer->multimailer->addReplyTo($reply_mail, isset($reply_name) ? '"' . $reply_name . '"' : null);
     }
-    $charset              = !empty($xoopsModuleConfig['mail_charset']) ? $xoopsModuleConfig['mail_charset'] : _CHARSET;
+    $charset              = !empty($helper->getConfig('mail_charset')) ? $helper->getConfig('mail_charset') : _CHARSET;
     $xoopsMailer->charSet = $charset;
     if (false != $group) {
         $xoopsMailer->setToGroups($group);

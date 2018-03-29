@@ -36,6 +36,8 @@
 ##  Project: Liaise                                                          ##
 ###############################################################################
 
+use XoopsModules\Liaise;
+
 // includes
 include __DIR__ . '/../../../include/cp_header.php';
 include __DIR__ . '/../include/common.php';
@@ -51,11 +53,10 @@ if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/m
     redirect_header('../../../admin.php', 5, _AM_LIAISE_MODULEADMIN_MISSING, false);
 }
 
-if (file_exists('../language/' . $xoopsConfig['language'] . '/main.php')) {
-    include __DIR__ . '/../language/' . $xoopsConfig['language'] . '/main.php';
-} else {
-    include __DIR__ . '/../language/english/main.php';
-}
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
+$helper->loadLanguage('modinfo');
+
 /** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler   = xoops_getHandler('module');
 $moduleInfo      = $moduleHandler->get($xoopsModule->getVar('mid'));
@@ -148,12 +149,10 @@ function adminHtmlHeader($navigation = 'index.php')
 function adminHtmlHeaderPopup()
 {
     global $xoopsModule, $xoopsConfig;
-    $langf = LIAISE_ROOT_PATH . 'language/' . $xoopsConfig['language'] . '/modinfo.php';
-    if (file_exists($langf)) {
-        include $langf;
-    } else {
-        include LIAISE_ROOT_PATH . 'language/english/modinfo.php';
-    }
+
+    /** @var Liaise\Helper $helper */
+    $helper = Liaise\Helper::getInstance();
+    $helper->loadLanguage('modinfo');
 }
 
 function adminHtmlFooter()

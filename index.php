@@ -36,6 +36,11 @@
 ##  URL: http://www.brandycoke.com/                                          ##
 ##  Project: Liaise                                                          ##
 ###############################################################################
+
+use XoopsModules\Liaise;
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
+
 require_once __DIR__ . '/header.php';
 $myts = \MyTextSanitizer::getInstance();
 
@@ -65,7 +70,7 @@ if (empty($_POST['submit'])) {
                         'id'    => $form->getVar('form_id')
                     ]);
                 }
-                $xoopsTpl->assign('forms_intro', $myts->displayTarea($xoopsModuleConfig['intro']));
+                $xoopsTpl->assign('forms_intro', $myts->displayTarea($helper->getConfig('intro')));
             }
         }
     } else {
@@ -84,7 +89,7 @@ if (empty($_POST['submit'])) {
         }
     }
 
-    $xoopsTpl->assign('forms_breadcrumb', $xoopsModuleConfig['breadcrumb']);
+    $xoopsTpl->assign('forms_breadcrumb', $helper->getConfig('breadcrumb'));
     require XOOPS_ROOT_PATH . '/footer.php';
 } else {
     $form_id = isset($_POST['form_id']) ? (int)$_POST['form_id'] : 0;
@@ -104,7 +109,7 @@ if (empty($_POST['submit'])) {
     // ----------------------------
 
     // ---------- captcha ---------
-    if ($xoopsModuleConfig['captcha'] && empty($liaise_error)) {
+    if ($helper->getConfig('captcha') && empty($liaise_error)) {
         require_once LIAISE_ROOT_PATH . 'class/captcha_x/class.captcha_x.php';
         $captcha = new captcha_x();
         if (!isset($_POST['captcha']) || !$captcha->validate($_POST['captcha'])) {

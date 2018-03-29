@@ -68,7 +68,7 @@ $modversion['templates'][3]['file']        = 'liaise_error.html';
 $modversion['templates'][3]['description'] = _MI_LIAISE_TMPL_ERROR_DESC;
 
 //    Module Configs
-// $xoopsModuleConfig['t_width']
+// $helper->getConfig('t_width')
 $modversion['config'][1]['name']        = 't_width';
 $modversion['config'][1]['title']       = '_MI_LIAISE_TEXT_WIDTH';
 $modversion['config'][1]['description'] = '';
@@ -76,7 +76,7 @@ $modversion['config'][1]['formtype']    = 'textbox';
 $modversion['config'][1]['valuetype']   = 'int';
 $modversion['config'][1]['default']     = '35';
 
-// $xoopsModuleConfig['t_max']
+// $helper->getConfig('t_max')
 $modversion['config'][2]['name']        = 't_max';
 $modversion['config'][2]['title']       = '_MI_LIAISE_TEXT_MAX';
 $modversion['config'][2]['description'] = '';
@@ -84,7 +84,7 @@ $modversion['config'][2]['formtype']    = 'textbox';
 $modversion['config'][2]['valuetype']   = 'int';
 $modversion['config'][2]['default']     = '255';
 
-// $xoopsModuleConfig['ta_rows']
+// $helper->getConfig('ta_rows')
 $modversion['config'][3]['name']        = 'ta_rows';
 $modversion['config'][3]['title']       = '_MI_LIAISE_TAREA_ROWS';
 $modversion['config'][3]['description'] = '';
@@ -92,7 +92,7 @@ $modversion['config'][3]['formtype']    = 'textbox';
 $modversion['config'][3]['valuetype']   = 'int';
 $modversion['config'][3]['default']     = '5';
 
-// $xoopsModuleConfig['ta_cols']
+// $helper->getConfig('ta_cols')
 $modversion['config'][4]['name']        = 'ta_cols';
 $modversion['config'][4]['title']       = '_MI_LIAISE_TAREA_COLS';
 $modversion['config'][4]['description'] = '';
@@ -100,7 +100,7 @@ $modversion['config'][4]['formtype']    = 'textbox';
 $modversion['config'][4]['valuetype']   = 'int';
 $modversion['config'][4]['default']     = '35';
 
-// $xoopsModuleConfig['moreinfo']
+// $helper->getConfig('moreinfo')
 $modversion['config'][5]['name']        = 'moreinfo';
 $modversion['config'][5]['title']       = '_MI_LIAISE_MOREINFO';
 $modversion['config'][5]['description'] = '';
@@ -114,7 +114,7 @@ $modversion['config'][5]['options']     = [
     _MI_LIAISE_MOREINFO_FORM  => 'form'
 ];
 
-// $xoopsModuleConfig['mail_charset']
+// $helper->getConfig('mail_charset')
 $modversion['config'][6]['name']        = 'mail_charset';
 $modversion['config'][6]['title']       = '_MI_LIAISE_MAIL_CHARSET';
 $modversion['config'][6]['description'] = '_MI_LIAISE_MAIL_CHARSET_DESC';
@@ -122,7 +122,7 @@ $modversion['config'][6]['formtype']    = 'textbox';
 $modversion['config'][6]['valuetype']   = 'text';
 $modversion['config'][6]['default']     = _CHARSET;
 
-// $xoopsModuleConfig['prefix']
+// $helper->getConfig('prefix')
 $modversion['config'][7]['name']        = 'prefix';
 $modversion['config'][7]['title']       = '_MI_LIAISE_PREFIX';
 $modversion['config'][7]['description'] = '';
@@ -130,7 +130,7 @@ $modversion['config'][7]['formtype']    = 'textbox';
 $modversion['config'][7]['valuetype']   = 'text';
 $modversion['config'][7]['default']     = '';
 
-// $xoopsModuleConfig['suffix']
+// $helper->getConfig('suffix')
 $modversion['config'][8]['name']        = 'suffix';
 $modversion['config'][8]['title']       = '_MI_LIAISE_SUFFIX';
 $modversion['config'][8]['description'] = '';
@@ -138,7 +138,7 @@ $modversion['config'][8]['formtype']    = 'textbox';
 $modversion['config'][8]['valuetype']   = 'text';
 $modversion['config'][8]['default']     = '*';
 
-// $xoopsModuleConfig['intro']
+// $helper->getConfig('intro')
 $modversion['config'][9]['name']        = 'intro';
 $modversion['config'][9]['title']       = '_MI_LIAISE_INTRO';
 $modversion['config'][9]['description'] = '';
@@ -146,7 +146,7 @@ $modversion['config'][9]['formtype']    = 'textarea';
 $modversion['config'][9]['valuetype']   = 'text';
 $modversion['config'][9]['default']     = _MI_LIAISE_INTRO_DEFAULT;
 
-// $xoopsModuleConfig['global']
+// $helper->getConfig('global')
 $modversion['config'][10]['name']        = 'global';
 $modversion['config'][10]['title']       = '_MI_LIAISE_GLOBAL';
 $modversion['config'][10]['description'] = '';
@@ -154,7 +154,7 @@ $modversion['config'][10]['formtype']    = 'textarea';
 $modversion['config'][10]['valuetype']   = 'text';
 $modversion['config'][10]['default']     = _MI_LIAISE_GLOBAL_DEFAULT;
 
-// $xoopsModuleConfig['uploaddir']
+// $helper->getConfig('uploaddir')
 $modversion['config'][11]['name']        = 'uploaddir';
 $modversion['config'][11]['title']       = '_MI_LIAISE_UPLOADDIR';
 $modversion['config'][11]['description'] = '_MI_LIAISE_UPLOADDIR_DESC';

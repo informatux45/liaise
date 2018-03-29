@@ -33,10 +33,14 @@
 ##  Project: Liaise                                                          ##
 ###############################################################################
 
+use XoopsModules\Liaise;
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
+
 if (!defined('LIAISE_CONSTANTS_DEFINED')) {
     define('LIAISE_URL', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/');
     define('LIAISE_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/');
-    define('LIAISE_UPLOAD_PATH', $xoopsModuleConfig['uploaddir'] . '/');
+    define('LIAISE_UPLOAD_PATH', $helper->getConfig('uploaddir') . '/');
 
     define('LIAISE_CONSTANTS_DEFINED', true);
 }

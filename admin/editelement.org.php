@@ -32,6 +32,11 @@
 ##  URL: http://www.brandycoke.com/                                          ##
 ##  Project: Liaise                                                          ##
 ###############################################################################
+
+use XoopsModules\Liaise;
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
+
 include __DIR__ . '/admin_header.php';
 $liaise_ele_mgr = xoops_getModuleHandler('elements');
 require_once LIAISE_ROOT_PATH . 'class/elementrenderer.php';
@@ -69,32 +74,32 @@ switch ($op) {
             $element      = $liaise_ele_mgr->create();
             $output_title = _AM_ELE_CREATE;
         }
-        $output = new XoopsThemeForm($output_title, 'form_ele', _THIS_PAGE);
+        $output = new \XoopsThemeForm($output_title, 'form_ele', _THIS_PAGE);
         if (empty($addopt)) {
             $ele_caption      = $clone ? sprintf(_AM_COPIED, $element->getVar('ele_caption', 'f')) : $element->getVar('ele_caption', 'f');
-            $text_ele_caption = new XoopsFormText(_AM_ELE_CAPTION, 'ele_caption', 50, 255, $ele_caption);
+            $text_ele_caption = new \XoopsFormText(_AM_ELE_CAPTION, 'ele_caption', 50, 255, $ele_caption);
             $value            = $element->getVar('ele_value', 'f');
             $req              = $element->getVar('ele_req');
             $display          = $element->getVar('ele_display');
             $order            = $element->getVar('ele_order');
         } else {
             $ele_caption      = $myts->htmlSpecialChars($myts->stripSlashesGPC($ele_caption));
-            $text_ele_caption = new XoopsFormText(_AM_ELE_CAPTION, 'ele_caption', 50, 255, $ele_caption);
+            $text_ele_caption = new \XoopsFormText(_AM_ELE_CAPTION, 'ele_caption', 50, 255, $ele_caption);
             $req              = isset($_POST['ele_req']) ? 1 : 0;
             $display          = isset($_POST['ele_display']) ? 1 : 0;
             $order            = isset($_POST['ele_order']) ? (int)$_POST['ele_order'] : 0;
         }
         $output->addElement($text_ele_caption);
 
-        $check_ele_req = new XoopsFormCheckBox(_AM_ELE_REQ, 'ele_req', $req);
+        $check_ele_req = new \XoopsFormCheckBox(_AM_ELE_REQ, 'ele_req', $req);
         $check_ele_req->addOption(1, ' ');
         $output->addElement($check_ele_req);
 
-        $check_ele_display = new XoopsFormCheckBox(_AM_ELE_DISPLAY, 'ele_display', $display);
+        $check_ele_display = new \XoopsFormCheckBox(_AM_ELE_DISPLAY, 'ele_display', $display);
         $check_ele_display->addOption(1, ' ');
         $output->addElement($check_ele_display);
 
-        $text_ele_order = new XoopsFormText(_AM_ELE_ORDER, 'ele_order', 3, 2, $order);
+        $text_ele_order = new \XoopsFormText(_AM_ELE_ORDER, 'ele_order', 3, 2, $order);
         $output->addElement($text_ele_order);
 
         switch ($ele_type) {
@@ -129,33 +134,33 @@ switch ($op) {
                 break;
         }
 
-        $hidden_op   = new XoopsFormHidden('op', 'save');
-        $hidden_type = new XoopsFormHidden('ele_type', $ele_type);
+        $hidden_op   = new \XoopsFormHidden('op', 'save');
+        $hidden_type = new \XoopsFormHidden('ele_type', $ele_type);
         $output->addElement($hidden_op);
         $output->addElement($hidden_type);
 
         if (true === $clone || empty($form_id)) {
-            $select_apply_form = new XoopsFormSelect(_AM_ELE_APPLY_TO_FORM, 'form_id', $form_id);
+            $select_apply_form = new \XoopsFormSelect(_AM_ELE_APPLY_TO_FORM, 'form_id', $form_id);
             $forms             = $liaise_form_mgr->getObjects(null, 'form_id, form_title');
             foreach ($forms as $f) {
                 $select_apply_form->addOption($f->getVar('form_id'), $f->getVar('form_title'));
             }
             $output->addElement($select_apply_form);
-            $hidden_clone = new XoopsFormHidden('clone', 1);
+            $hidden_clone = new \XoopsFormHidden('clone', 1);
             $output->addElement($hidden_clone);
         } else {
-            $hidden_form_id = new XoopsFormHidden('form_id', $form_id);
+            $hidden_form_id = new \XoopsFormHidden('form_id', $form_id);
             $output->addElement($hidden_form_id);
         }
 
         if (!empty($ele_id) && !$clone) {
-            $hidden_id = new XoopsFormHidden('ele_id', $ele_id);
+            $hidden_id = new \XoopsFormHidden('ele_id', $ele_id);
             $output->addElement($hidden_id);
         }
-        $submit = new XoopsFormButton('', 'submit', _AM_SAVE, 'submit');
-        $cancel = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
+        $submit = new \XoopsFormButton('', 'submit', _AM_SAVE, 'submit');
+        $cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
         $cancel->setExtra('onclick="javascript:history.go(-1);"');
-        $tray = new XoopsFormElementTray('');
+        $tray = new \XoopsFormElementTray('');
         $tray->addElement($submit);
         $tray->addElement($cancel);
         $output->addElement($tray);
@@ -192,8 +197,8 @@ switch ($op) {
         $value = [];
         switch ($ele_type) {
             case 'text':
-                $value[] = !empty($ele_value[0]) ? (int)$ele_value[0] : $xoopsModuleConfig['t_width'];
-                $value[] = !empty($ele_value[1]) ? (int)$ele_value[1] : $xoopsModuleConfig['t_max'];
+                $value[] = !empty($ele_value[0]) ? (int)$ele_value[0] : $helper->getConfig('t_width');
+                $value[] = !empty($ele_value[1]) ? (int)$ele_value[1] : $helper->getConfig('t_max');
                 $value[] = $ele_value[2];
                 break;
             case 'textarea':
@@ -202,12 +207,12 @@ switch ($op) {
                 if (0 != (int)$ele_value[1]) {
                     $value[] = (int)$ele_value[1];
                 } else {
-                    $value[] = $xoopsModuleConfig['ta_rows'];
+                    $value[] = $helper->getConfig('ta_rows');
                 }
                 if (0 != (int)$ele_value[2]) {
                     $value[] = (int)$ele_value[2];
                 } else {
-                    $value[] = $xoopsModuleConfig['ta_cols'];
+                    $value[] = $helper->getConfig('ta_cols');
                 }
                 break;
             case 'select':
@@ -309,15 +314,15 @@ xoops_cp_footer();
 
 function addOption($id1, $id2, $text = '', $type = 'check', $checked = null)
 {
-    $d = new XoopsFormText('', $id1, 40, 255, $text);
+    $d = new \XoopsFormText('', $id1, 40, 255, $text);
     if ('check' === $type) {
-        $c = new XoopsFormCheckBox('', $id2, $checked);
+        $c = new \XoopsFormCheckBox('', $id2, $checked);
         $c->addOption(1, ' ');
     } else {
-        $c = new XoopsFormRadio('', 'checked', $checked);
+        $c = new \XoopsFormRadio('', 'checked', $checked);
         $c->addOption($id2, ' ');
     }
-    $t = new XoopsFormElementTray('');
+    $t = new \XoopsFormElementTray('');
     $t->addElement($c);
     $t->addElement($d);
 
@@ -326,10 +331,10 @@ function addOption($id1, $id2, $text = '', $type = 'check', $checked = null)
 
 function addOptionsTray()
 {
-    $t = new XoopsFormText('', 'addopt', 3, 2);
-    $l = new XoopsFormLabel('', sprintf(_AM_ELE_ADD_OPT, $t->render()));
-    $b = new XoopsFormButton('', 'submit', _AM_ELE_ADD_OPT_SUBMIT, 'submit');
-    $r = new XoopsFormElementTray('');
+    $t = new \XoopsFormText('', 'addopt', 3, 2);
+    $l = new \XoopsFormLabel('', sprintf(_AM_ELE_ADD_OPT, $t->render()));
+    $b = new \XoopsFormButton('', 'submit', _AM_ELE_ADD_OPT_SUBMIT, 'submit');
+    $r = new \XoopsFormElementTray('');
     $r->addElement($l);
     $r->addElement($b);
 

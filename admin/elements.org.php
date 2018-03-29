@@ -44,7 +44,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
     $form =& $liaise_form_mgr->get($form_id);
     adminHtmlHeader();
     $jump    = [];
-    $jump[0] = new XoopsFormSelect('', 'ele_type');
+    $jump[0] = new \XoopsFormSelect('', 'ele_type');
     $jump[0]->addOptionArray([
                                  'text'      => _AM_ELE_TEXT,
                                  'textarea'  => _AM_ELE_TAREA,
@@ -56,9 +56,9 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
                                  'uploadimg' => _AM_ELE_UPLOADIMG,
                                  'upload'    => _AM_ELE_UPLOADFILE
                              ]);
-    $jump[1] = new XoopsFormHidden('op', 'edit');
-    $jump[2] = new XoopsFormHidden('form_id', $form_id);
-    $jump[3] = new XoopsFormButton('', 'submit', _GO, 'submit');
+    $jump[1] = new \XoopsFormHidden('op', 'edit');
+    $jump[2] = new \XoopsFormHidden('form_id', $form_id);
+    $jump[3] = new \XoopsFormButton('', 'submit', _GO, 'submit');
     echo '<div align="center">
             <form action="' . LIAISE_URL . 'admin/editelement.php" method="post">
                 <b>' . _AM_ELE_CREATE . '</b>';
@@ -79,7 +79,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
             <td class="head" align="center">' . _AM_ACTION . '</td>
         </tr>
     ';
-    $criteria = new Criteria('form_id', $form_id);
+    $criteria = new \Criteria('form_id', $form_id);
     $criteria->setSort('ele_order');
     $criteria->setOrder('ASC');
 
@@ -89,15 +89,15 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
             $renderer  = new LiaiseElementRenderer($i);
             $ele_type  = $i->getVar('ele_type');
             $req       = $i->getVar('ele_req');
-            $check_req = new XoopsFormCheckBox('', 'ele_req[' . $id . ']', $req);
+            $check_req = new \XoopsFormCheckBox('', 'ele_req[' . $id . ']', $req);
             $check_req->addOption(1, ' ');
             $ele_value     =& $renderer->constructElement(true);
             $order         = $i->getVar('ele_order');
-            $text_order    = new XoopsFormText('', 'ele_order[' . $id . ']', 3, 2, $order);
+            $text_order    = new \XoopsFormText('', 'ele_order[' . $id . ']', 3, 2, $order);
             $display       = $i->getVar('ele_display');
-            $check_display = new XoopsFormCheckBox('', 'ele_display[' . $id . ']', $display);
+            $check_display = new \XoopsFormCheckBox('', 'ele_display[' . $id . ']', $display);
             $check_display->addOption(1, ' ');
-            $hidden_id = new XoopsFormHidden('ele_id[]', $id);
+            $hidden_id = new \XoopsFormHidden('ele_id[]', $id);
             echo '<tr>';
             echo '<td class="odd" colspan="2">' . $i->getVar('ele_caption') . "</td>\n";
             echo '<td class="even" rowspan="2" align="center">' . $check_req->render() . "</td>\n";
@@ -112,9 +112,9 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
         }
     }
 
-    $submit  = new XoopsFormButton('', 'submit', _AM_SAVE, 'submit');
-    $submit1 = new XoopsFormButton('', 'submit', _AM_SAVE_THEN_FORM, 'submit');
-    $tray    = new XoopsFormElementTray('');
+    $submit  = new \XoopsFormButton('', 'submit', _AM_SAVE, 'submit');
+    $submit1 = new \XoopsFormButton('', 'submit', _AM_SAVE_THEN_FORM, 'submit');
+    $tray    = new \XoopsFormElementTray('');
     $tray->addElement($submit);
     $tray->addElement($submit1);
     echo '
@@ -123,8 +123,8 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
         </tr>
     </table>
     ';
-    $hidden_op      = new XoopsFormHidden('op', 'save');
-    $hidden_form_id = new XoopsFormHidden('form_id', $form_id);
+    $hidden_op      = new \XoopsFormHidden('op', 'save');
+    $hidden_form_id = new \XoopsFormHidden('form_id', $form_id);
     echo $hidden_op->render();
     echo $hidden_form_id->render();
     echo '</form>';

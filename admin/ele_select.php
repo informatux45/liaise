@@ -40,9 +40,9 @@ if (empty($addopt) && !empty($ele_id)) {
     $ele_value = $element->getVar('ele_value');
 }
 $ele_size    = !empty($ele_value[0]) ? $ele_value[0] : 1;
-$size        = new XoopsFormText(_AM_ELE_SIZE, 'ele_value[0]', 3, 2, $ele_size);
+$size        = new \XoopsFormText(_AM_ELE_SIZE, 'ele_value[0]', 3, 2, $ele_size);
 $allow_multi = empty($ele_value[1]) ? 0 : 1;
-$multiple    = new XoopsFormRadioYN(_AM_ELE_MULTIPLE, 'ele_value[1]', $allow_multi);
+$multiple    = new \XoopsFormRadioYN(_AM_ELE_MULTIPLE, 'ele_value[1]', $allow_multi);
 
 $options   = [];
 $opt_count = 0;
@@ -74,7 +74,7 @@ if (empty($addopt) && !empty($ele_id)) {
 $add_opt   = addOptionsTray();
 $options[] = $add_opt;
 
-$opt_tray = new XoopsFormElementTray(_AM_ELE_OPT, '<br>');
+$opt_tray = new \XoopsFormElementTray(_AM_ELE_OPT, '<br>');
 $opt_tray->setDescription(_AM_ELE_OPT_DESC . _AM_ELE_OPT_DESC1);
 for ($i = 0, $iMax = count($options); $i < $iMax; ++$i) {
     $opt_tray->addElement($options[$i]);

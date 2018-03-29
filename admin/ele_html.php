@@ -32,15 +32,20 @@
 ##  URL: http://www.brandycoke.com/                                          ##
 ##  Project: Liaise                                                          ##
 ###############################################################################
+
+use XoopsModules\Liaise;
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
+
 if (!defined('LIAISE_ROOT_PATH')) {
     exit();
 }
 
-$rows    = !empty($value[1]) ? $value[1] : $xoopsModuleConfig['ta_rows'];
-$cols    = !empty($value[2]) ? $value[2] : $xoopsModuleConfig['ta_cols'];
-$rows    = new XoopsFormText(_AM_ELE_ROWS, 'ele_value[1]', 3, 3, $rows);
-$cols    = new XoopsFormText(_AM_ELE_COLS, 'ele_value[2]', 3, 3, $cols);
-$default = new XoopsFormDhtmlTextArea(_AM_ELE_DEFAULT, 'ele_value[0]', isset($value[0]) ? $myts->htmlSpecialChars($myts->stripSlashesGPC($value[0])) : '', 10, 50);
+$rows    = !empty($value[1]) ? $value[1] : $helper->getConfig('ta_rows');
+$cols    = !empty($value[2]) ? $value[2] : $helper->getConfig('ta_cols');
+$rows    = new \XoopsFormText(_AM_ELE_ROWS, 'ele_value[1]', 3, 3, $rows);
+$cols    = new \XoopsFormText(_AM_ELE_COLS, 'ele_value[2]', 3, 3, $cols);
+$default = new \XoopsFormDhtmlTextArea(_AM_ELE_DEFAULT, 'ele_value[0]', isset($value[0]) ? $myts->htmlSpecialChars($myts->stripSlashesGPC($value[0])) : '', 10, 50);
 $output->addElement($rows, 1);
 $output->addElement($cols, 1);
 $output->addElement($default);

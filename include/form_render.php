@@ -36,6 +36,11 @@
 ##  URL: http://www.brandycoke.com/                                          ##
 ##  Project: Liaise                                                          ##
 ###############################################################################
+
+use XoopsModules\Liaise;
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
+
 if (!defined('LIAISE_ROOT_PATH')) {
     exit();
 }
@@ -47,14 +52,14 @@ require_once LIAISE_ROOT_PATH . 'class/elementrenderer.php';
 $GLOBALS['xoopsOption']['template_main'] = 'xliaise_form.html';
 // -------------------------------------------------------
 require_once XOOPS_ROOT_PATH . '/header.php';
-$criteria = new CriteriaCompo();
-$criteria->add(new Criteria('form_id', $form->getVar('form_id')));
-$criteria->add(new Criteria('ele_display', 1));
+$criteria = new \CriteriaCompo();
+$criteria->add(new \Criteria('form_id', $form->getVar('form_id')));
+$criteria->add(new \Criteria('ele_display', 1));
 $criteria->setSort('ele_order');
 $criteria->setOrder('ASC');
 $elements = $liaise_ele_mgr->getObjects($criteria, true);
 
-$form_output = new XoopsThemeForm($form->getVar('form_title'), 'liaise_' . $form->getVar('form_id'), LIAISE_URL . 'index.php');
+$form_output = new \XoopsThemeForm($form->getVar('form_title'), 'liaise_' . $form->getVar('form_id'), LIAISE_URL . 'index.php');
 foreach ($elements as $i) {
     $renderer = new \LiaiseElementRenderer($i);
     $form_ele =& $renderer->constructElement();
@@ -70,13 +75,13 @@ foreach ($elements as $i) {
 // ------
 
 // --- captcha ---
-if ($xoopsModuleConfig['captcha']) {
+if ($helper->getConfig('captcha')) {
     $server  = LIAISE_URL . 'server.php';
     $onclick = "javasript:this.src='" . $server . "?'+Math.random();";
     $captcha = _LIAISE_CAPTCHA_DESC . "<br>\n";
     $captcha .= '<img src="' . $server . '" onclick="' . $onclick . '" alt="CAPTCHA image" style="padding: 3px">' . "<br>\n";
     $captcha .= '<input name="captcha" type="text">';
-    $form_output->addElement(new XoopsFormLabel(_LIAISE_CAPTCHA, $captcha));
+    $form_output->addElement(new \XoopsFormLabel(_LIAISE_CAPTCHA, $captcha));
 }
 // ------
 
@@ -86,8 +91,8 @@ if ($liaise_error) {
 }
 // -----
 
-$form_output->addElement(new XoopsFormHidden('form_id', $form->getVar('form_id')));
-$form_output->addElement(new XoopsFormButton('', 'submit', $form->getVar('form_submit_text'), 'submit'));
+$form_output->addElement(new \XoopsFormHidden('form_id', $form->getVar('form_id')));
+$form_output->addElement(new \XoopsFormButton('', 'submit', $form->getVar('form_submit_text'), 'submit'));
 // $form_output->assign($xoopsTpl);
 
 $c    = 0;
@@ -134,10 +139,10 @@ $xoopsTpl->assign('form_output', [
     'elements'   => $eles
 ]);
 
-$xoopsTpl->assign('form_req_prefix', $xoopsModuleConfig['prefix']);
-$xoopsTpl->assign('form_req_suffix', $xoopsModuleConfig['suffix']);
+$xoopsTpl->assign('form_req_prefix', $helper->getConfig('prefix'));
+$xoopsTpl->assign('form_req_suffix', $helper->getConfig('suffix'));
 $xoopsTpl->assign('form_intro', $form->getVar('form_intro'));
-$xoopsTpl->assign('form_text_global', $myts->displayTarea($xoopsModuleConfig['global']));
+$xoopsTpl->assign('form_text_global', $myts->displayTarea($helper->getConfig('global')));
 if (0 == $form->getVar('form_order')) {
     if (!isset($xoopsUser) || !is_object($xoopsUser) || !$xoopsUser->isAdmin()) {
         header('Location: ' . LIAISE_URL);

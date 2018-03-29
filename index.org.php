@@ -32,6 +32,11 @@
 ##  URL: http://www.brandycoke.com/                                          ##
 ##  Project: Liaise                                                          ##
 ###############################################################################
+
+use XoopsModules\Liaise;
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
+
 require_once __DIR__ . '/header.php';
 $myts = \MyTextSanitizer::getInstance();
 if (empty($_POST['submit'])) {
@@ -52,7 +57,7 @@ if (empty($_POST['submit'])) {
                         'id'    => $form->getVar('form_id')
                     ]);
                 }
-                $xoopsTpl->assign('forms_intro', $myts->displayTarea($xoopsModuleConfig['intro']));
+                $xoopsTpl->assign('forms_intro', $myts->displayTarea($helper->getConfig('intro')));
             }
         }
     } else {

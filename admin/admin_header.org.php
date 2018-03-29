@@ -32,6 +32,9 @@
 ##  URL: http://www.brandycoke.com/                                          ##
 ##  Project: Liaise                                                          ##
 ###############################################################################
+
+use XoopsModules\Liaise;
+
 include __DIR__ . '/../../../include/cp_header.php';
 include __DIR__ . '/../include/common.php';
 define('LIAISE_ADMIN_URL', LIAISE_URL . 'admin/index.php');
@@ -39,12 +42,11 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 function adminHtmlHeader()
 {
     global $xoopsModule, $xoopsConfig;
-    $langf = LIAISE_ROOT_PATH . 'language/' . $xoopsConfig['language'] . '/modinfo.php';
-    if (file_exists($langf)) {
-        include $langf;
-    } else {
-        include LIAISE_ROOT_PATH . 'language/english/modinfo.php';
-    }
+
+    /** @var Liaise\Helper $helper */
+    $helper = Liaise\Helper::getInstance();
+    $helper->loadLanguage('modinfo');
+
     include __DIR__ . '/menu.php';
     for ($i = 0; $i < 3; $i++) {
         $links[$i] = [0 => LIAISE_URL . $adminmenu[$i]['link'], 1 => $adminmenu[$i]['title']];

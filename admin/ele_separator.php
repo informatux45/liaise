@@ -64,7 +64,7 @@ $opt_count = 0;
 //    }
 //}
 $options[] = addOptionsTray();
-$opt_tray  = new XoopsFormElementTray(_AM_ELE_OPT, '<br>');
+$opt_tray  = new \XoopsFormElementTray(_AM_ELE_OPT, '<br>');
 $opt_tray->setDescription(_AM_ELE_OPT_DESC2 . '<br>UUUUUUUUUUUUUUU<br>' . _AM_ELE_OTHER);
 for ($i = 0, $iMax = count($options); $i < $iMax; ++$i) {
     $opt_tray->addElement($options[$i]);

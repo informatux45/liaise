@@ -26,8 +26,8 @@
  * $maxfilesize = 50000;
  * $maxfilewidth = 120;
  * $maxfileheight = 120;
- * $uploader = new XoopsMediaUploader('/home/xoops/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
- * if( $uploader->fetchMedia($HTTP_POST_VARS['uploade_file_name'])) {
+ * $uploader = new \XoopsMediaUploader('/home/xoops/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+ * if( $uploader->fetchMedia($_POST['uploade_file_name'])) {
  * if( !$uploader->upload()) {
  * echo $uploader->getErrors();
  * } else {
@@ -50,8 +50,8 @@
  * $maxfilesize = 50000;
  * $maxfilewidth = 120;
  * $maxfileheight = 120;
- * $uploader = new XoopsMediaUploader('/home/xoops/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
- * if( $uploader->fetchMedia($HTTP_POST_VARS['uploade_file_name'])) {
+ * $uploader = new \XoopsMediaUploader('/home/xoops/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+ * if( $uploader->fetchMedia($_POST['uploade_file_name'])) {
  *            if( !$uploader->upload()) {
  *               echo $uploader->getErrors();
  *            } else {
@@ -221,7 +221,7 @@ class LiaiseMediaUploader
             return false;
         }
 
-        if ('none' == $this->mediaTmpName) {
+        if ('none' === $this->mediaTmpName) {
             $this->setErrors('No file uploaded');
 
             return false;
@@ -238,7 +238,7 @@ class LiaiseMediaUploader
             if (!$this->checkMaxHeight($this->dimension[1])) {
                 $this->setErrors(sprintf('File height: %u. Maximum height allowed: %u', $this->dimension[1], $this->maxHeight));
             }
-        } elseif ('uploadimg' == $ele->getVar('ele_type')) {
+        } elseif ('uploadimg' === $ele->getVar('ele_type')) {
             $this->setErrors('Could not detect uploaded image size');
         }
 
@@ -260,7 +260,7 @@ class LiaiseMediaUploader
      */
     public function setTargetFileName($value)
     {
-        $this->targetFileName = (string)trim($value);
+        $this->targetFileName = trim($value);
     }
 
     /**
@@ -270,7 +270,7 @@ class LiaiseMediaUploader
      */
     public function setPrefix($value)
     {
-        $this->prefix = (string)trim($value);
+        $this->prefix = trim($value);
     }
 
     /**

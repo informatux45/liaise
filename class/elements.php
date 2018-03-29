@@ -196,7 +196,7 @@ class LiaiseElementsHandler
 
             return $false;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $elements = new $this->obj_class();
             $elements->assignVars($myrow);
             if (!$id_as_key) {

@@ -103,7 +103,7 @@ class LiaiseElementsHandler
         return false;
     }
 
-    public function insert(XoopsObject $element, $force = false)
+    public function insert(\XoopsObject $element, $force = false)
     {
         if (strtolower(get_class($element)) != strtolower($this->obj_class)) {
             return false;
@@ -185,7 +185,7 @@ class LiaiseElementsHandler
         if (!$result) {
             return false;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $elements = new $this->obj_class();
             $elements->assignVars($myrow);
             if (!$id_as_key) {

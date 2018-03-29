@@ -33,7 +33,7 @@
 ##  Project: Liaise                                                          ##
 ###############################################################################
 
-function xoops_module_install_liaise(XoopsModule $module)
+function xoops_module_install_liaise(\XoopsModule $module)
 {
     global $modulepermHandler;
     /*

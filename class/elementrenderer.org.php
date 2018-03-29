@@ -33,6 +33,8 @@
 ##  Project: Liaise                                                          ##
 ###############################################################################
 
+use XoopsModules\Liaise;
+
 class LiaiseElementRenderer
 {
     private $_ele;
@@ -60,7 +62,7 @@ class LiaiseElementRenderer
                     $ele_value[2] = str_replace('{UNAME}', $xoopsUser->getVar('uname', 'e'), $ele_value[2]);
                     $ele_value[2] = str_replace('{EMAIL}', $xoopsUser->getVar('email', 'e'), $ele_value[2]);
                 }
-                $form_ele = new XoopsFormText(
+                $form_ele = new \XoopsFormText(
                     $ele_caption,
                     $form_ele_id,
                     $ele_value[0],    //    box width
@@ -70,7 +72,7 @@ class LiaiseElementRenderer
                 break;
 
             case 'textarea':
-                $form_ele = new XoopsFormTextArea(
+                $form_ele = new \XoopsFormTextArea(
                     $ele_caption,
                     $form_ele_id,
                     $myts->htmlspecialchars($myts->stripSlashesGPC($ele_value[0])), //    default value
@@ -82,9 +84,9 @@ class LiaiseElementRenderer
             case 'html':
                 global $check_req;
                 if (!$admin) {
-                    $form_ele = new XoopsFormLabel($ele_caption, $myts->displayTarea($myts->stripSlashesGPC($ele_value[0]), 1));
+                    $form_ele = new \XoopsFormLabel($ele_caption, $myts->displayTarea($myts->stripSlashesGPC($ele_value[0]), 1));
                 } else {
-                    $form_ele = new XoopsFormDhtmlTextArea(
+                    $form_ele = new \XoopsFormDhtmlTextArea(
                         $ele_caption,
                         $form_ele_id,
                         $myts->htmlspecialchars($myts->stripSlashesGPC($ele_value[0])), //    default value
@@ -107,7 +109,7 @@ class LiaiseElementRenderer
                     }
                     $opt_count++;
                 }
-                $form_ele = new XoopsFormSelect(
+                $form_ele = new \XoopsFormSelect(
                     $ele_caption,
                     $form_ele_id,
                     $selected,
@@ -133,10 +135,10 @@ class LiaiseElementRenderer
                         $opt_count++;
                     }
 
-                $form_ele = new XoopsFormElementTray($ele_caption, 'b' === $delimiter ? '<br>' : ' ');
+                $form_ele = new \XoopsFormElementTray($ele_caption, 'b' === $delimiter ? '<br>' : ' ');
 //                while ($o = each($options)) {
                     foreach ($options as $o) {
-                        $t     = new XoopsFormCheckBox('', $form_ele_id . '[]', $selected);
+                        $t     = new \XoopsFormCheckBox('', $form_ele_id . '[]', $selected);
                         $other = $this->optOther($o['value'], $form_ele_id);
                         if (false !== $other && !$admin) {
                             $t->addOption($o['key'], _LIAISE_OPT_OTHER . $other);
@@ -169,10 +171,10 @@ class LiaiseElementRenderer
                     }
                 switch ($delimiter) {
                     case 'b':
-                        $form_ele = new XoopsFormElementTray($ele_caption, '<br>');
+                        $form_ele = new \XoopsFormElementTray($ele_caption, '<br>');
 //                        while ($o = each($options)) {
                         foreach ($options as $o) {
-                            $t     = new XoopsFormRadio('', $form_ele_id, $selected);
+                            $t     = new \XoopsFormRadio('', $form_ele_id, $selected);
                             $other = $this->optOther($o['value'], $form_ele_id);
                             if (false !== $other && !$admin) {
                                 $t->addOption($o['key'], _LIAISE_OPT_OTHER . $other);
@@ -184,7 +186,7 @@ class LiaiseElementRenderer
                         break;
                     case 's':
                     default:
-                        $form_ele = new XoopsFormRadio($ele_caption, $form_ele_id, $selected);
+                        $form_ele = new \XoopsFormRadio($ele_caption, $form_ele_id, $selected);
 //                        while ($o = each($options)) {
                             foreach ($options as $o) {
                                 $other = $this->optOther($o['value'], $form_ele_id);
@@ -201,16 +203,16 @@ class LiaiseElementRenderer
             case 'upload':
             case 'uploadimg':
                 if ($admin) {
-                    $form_ele = new XoopsFormElementTray('', '<br>');
-                    $form_ele->addElement(new XoopsFormText(_AM_ELE_UPLOAD_MAXSIZE, $form_ele_id . '[0]', 10, 20, $ele_value[0]));
+                    $form_ele = new \XoopsFormElementTray('', '<br>');
+                    $form_ele->addElement(new \XoopsFormText(_AM_ELE_UPLOAD_MAXSIZE, $form_ele_id . '[0]', 10, 20, $ele_value[0]));
                     if ('uploadimg' === $e) {
-                        $form_ele->addElement(new XoopsFormText(_AM_ELE_UPLOADIMG_MAXWIDTH, $form_ele_id . '[4]', 10, 20, $ele_value[4]));
-                        $form_ele->addElement(new XoopsFormText(_AM_ELE_UPLOADIMG_MAXHEIGHT, $form_ele_id . '[5]', 10, 20, $ele_value[5]));
+                        $form_ele->addElement(new \XoopsFormText(_AM_ELE_UPLOADIMG_MAXWIDTH, $form_ele_id . '[4]', 10, 20, $ele_value[4]));
+                        $form_ele->addElement(new \XoopsFormText(_AM_ELE_UPLOADIMG_MAXHEIGHT, $form_ele_id . '[5]', 10, 20, $ele_value[5]));
                     }
                 } else {
                     global $form_output;
                     $form_output->setExtra('enctype="multipart/form-data"');
-                    $form_ele = new XoopsFormFile($ele_caption, $form_ele_id, $ele_value[0]);
+                    $form_ele = new \XoopsFormFile($ele_caption, $form_ele_id, $ele_value[0]);
                 }
                 break;
 
@@ -224,13 +226,14 @@ class LiaiseElementRenderer
 
     public function optOther($s = '', $id)
     {
-        global $xoopsModuleConfig;
+        /** @var Liaise\Helper $helper */
+        $helper = Liaise\Helper::getInstance();
         if (!preg_match('/\{OTHER\|+[0-9]+\}/', $s)) {
             return false;
         }
         $s   = explode('|', preg_replace('/[\{\}]/', '', $s));
-        $len = !empty($s[1]) ? $s[1] : $xoopsModuleConfig['t_width'];
-        $box = new XoopsFormText('', 'other[' . $id . ']', $len, 255);
+        $len = !empty($s[1]) ? $s[1] : $helper->getConfig('t_width');
+        $box = new \XoopsFormText('', 'other[' . $id . ']', $len, 255);
 
         return $box->render();
     }
