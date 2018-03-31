@@ -63,9 +63,9 @@ if (count($_POST) > 0) {
 
 $op      = isset($_GET['op']) ? trim($_GET['op']) : '';
 $op      = isset($_POST['op']) ? trim($_POST['op']) : $op;
-$clone   = isset($_GET['clone']) ? (int)$_GET['clone'] : 0;
+$clone   = \Xmf\Request::getInt('clone', 0, 'GET');
 $clone   = isset($_POST['clone']) ? trim($_POST['clone']) : $clone;
-$form_id = isset($_GET['form_id']) ? (int)$_GET['form_id'] : 0;
+$form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
 $form_id = isset($_POST['form_id']) ? trim($_POST['form_id']) : $form_id;
 
 if (isset($_POST['submit']) && _AM_ELE_ADD_OPT_SUBMIT == $_POST['submit'] && (int)$_POST['addopt'] > 0) {
@@ -106,7 +106,7 @@ switch ($op) {
             $text_ele_caption = new \XoopsFormText(_AM_ELE_CAPTION, 'ele_caption', 50, 255, $ele_caption);
             $req              = isset($_POST['ele_req']) ? 1 : 0;
             $display          = isset($_POST['ele_display']) ? 1 : 0;
-            $order            = isset($_POST['ele_order']) ? (int)$_POST['ele_order'] : 0;
+            $order            = \Xmf\Request::getInt('ele_order', 0, 'POST');
         }
         $output->addElement($text_ele_caption);
 

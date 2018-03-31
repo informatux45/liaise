@@ -94,8 +94,8 @@ switch ($op) {
         break;
 
     case 'edit':
-        $clone   = isset($_GET['clone']) ? (int)$_GET['clone'] : false;
-        $form_id = isset($_GET['form_id']) ? (int)$_GET['form_id'] : 0;
+        $clone   = \Xmf\Request::getInt('clone', false, 'GET');
+        $form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
         adminHtmlHeader();
         if (!empty($form_id)) {
             $form = $liaise_form_mgr->get($form_id);

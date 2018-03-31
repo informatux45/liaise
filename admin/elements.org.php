@@ -37,7 +37,7 @@ $liaise_ele_mgr = xoops_getModuleHandler('elements');
 require_once LIAISE_ROOT_PATH . 'class/elementrenderer.php';
 define('_THIS_PAGE', LIAISE_URL . 'admin/elements.php');
 if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
-    $form_id = isset($_GET['form_id']) ? (int)$_GET['form_id'] : 0;
+    $form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
     if (empty($form_id)) {
         redirect_header(LIAISE_ADMIN_URL, 0, _AM_NOTHING_SELECTED);
     }
@@ -129,7 +129,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
     echo $hidden_form_id->render();
     echo '</form>';
 } else {
-    $form_id = isset($_POST['form_id']) ? (int)$_POST['form_id'] : 0;
+    $form_id = \Xmf\Request::getInt('form_id', 0, 'POST');
     if (empty($form_id)) {
         redirect_header(LIAISE_ADMIN_URL, 0, _AM_NOTHING_SELECTED);
     }

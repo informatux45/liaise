@@ -50,7 +50,7 @@ $liaise_error = null;
 
 if (empty($_POST['submit'])) {
     global $xoopsTpl;
-    $form_id = isset($_GET['form_id']) ? (int)$_GET['form_id'] : 0;
+    $form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
 
     if (empty($form_id)) {
         $forms =& $liaise_form_mgr->getPermittedForms();
@@ -92,7 +92,7 @@ if (empty($_POST['submit'])) {
     $xoopsTpl->assign('forms_breadcrumb', $helper->getConfig('breadcrumb'));
     require XOOPS_ROOT_PATH . '/footer.php';
 } else {
-    $form_id = isset($_POST['form_id']) ? (int)$_POST['form_id'] : 0;
+    $form_id = \Xmf\Request::getInt('form_id', 0, 'POST');
     if (empty($form_id)
         || !$form =& $liaise_form_mgr->get($form_id)
                      || false === $liaise_form_mgr->getSingleFormPermission($form_id)) {
