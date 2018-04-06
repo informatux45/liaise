@@ -299,7 +299,7 @@ if (count($err) < 1) {
 // --------- Archivage --------
 global $xoopsDB;
 // Variable (initialisation)
-$form_id      = (int)$_POST['form_id'];
+$form_id      = \Xmf\Request::getInt('form_id', 0, 'POST');
 $form_message = trim($xoopsDB->escape(implode("\n", $msg)));
 $sql_archive  = 'INSERT INTO ' . $xoopsDB->prefix('xliaise_forms_archive') . " VALUES ('', '$form_id', UNIX_TIMESTAMP(), '$form_message')";
 $result       = $xoopsDB->query($sql_archive);

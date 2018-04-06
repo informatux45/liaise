@@ -123,7 +123,7 @@ switch ($op) {
     case 'archive':
         global $xoopsDB;
         adminHtmlHeader('forms.php');
-        $form_id = (int)$_GET['form_id'];
+        $form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
         $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('xliaise_forms_archive') . ' WHERE form_id = "' . $form_id . '" ORDER BY form_date DESC';
         $result  = $xoopsDB->query($sql);
         $archive = dbResultToArray($result);
@@ -220,12 +220,12 @@ switch ($op) {
         global $xoopsDB;
         adminHtmlHeaderPopup();
         // Message du visiteur
-        $msg_id   = (int)$_GET['msg_id'];
+        $msg_id   = \Xmf\Request::getInt('msg_id', 0, 'GET');
         $message  = 'SELECT * FROM ' . $xoopsDB->prefix('xliaise_forms_archive') . ' WHERE id = "' . $msg_id . '"';
         $result   = $xoopsDB->query($message);
         $msg_info = $xoopsDB->fetchArray($result);
         // Nom du formulaire
-        $form_id = (int)$_GET['form_id'];
+        $form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
 
         $form_name_sql = 'SELECT form_title FROM ' . $xoopsDB->prefix('xliaise_forms') . ' WHERE form_id = "' . $form_id . '"';
         $result_name   = $xoopsDB->query($form_name_sql);
@@ -264,7 +264,7 @@ switch ($op) {
                 redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 3, $err);
             }
             // ----------------------------
-            $msg_id = (int)$_POST['msg_id'];
+            $msg_id = \Xmf\Request::getInt('msg_id', 0, 'POST');
             if (empty($msg_id)) {
                 redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 3, _AM_NOTHING_SELECTED . ' MSG ID: ' . $msg_id);
             }
@@ -403,7 +403,7 @@ switch ($op) {
             }
             // ------
 
-            $form_id = (int)$_POST['form_id'];
+            $form_id = \Xmf\Request::getInt('form_id', 0, 'POST');
             if (empty($form_id)) {
                 redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 0, _AM_NOTHING_SELECTED);
             }

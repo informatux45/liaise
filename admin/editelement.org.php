@@ -59,7 +59,7 @@ $clone   = isset($_POST['clone']) ? trim($_POST['clone']) : $clone;
 $form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
 $form_id = isset($_POST['form_id']) ? trim($_POST['form_id']) : $form_id;
 
-if (isset($_POST['submit']) && _AM_ELE_ADD_OPT_SUBMIT == $_POST['submit'] && (int)$_POST['addopt'] > 0) {
+if (isset($_POST['submit']) && _AM_ELE_ADD_OPT_SUBMIT == $_POST['submit'] && \Xmf\Request::getInt('addopt', 0, 'POST') > 0) {
     $op = 'edit';
 }
 

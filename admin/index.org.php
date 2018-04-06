@@ -181,7 +181,7 @@ switch ($op) {
             adminHtmlHeader();
             xoops_confirm(['op' => 'delete', 'form_id' => $_GET['form_id'], 'ok' => 1], LIAISE_ADMIN_URL, _AM_FORM_CONFIRM_DELETE);
         } else {
-            $form_id = (int)$_POST['form_id'];
+            $form_id = \Xmf\Request::getInt('form_id', 0, 'POST');
             if (empty($form_id)) {
                 redirect_header(LIAISE_ADMIN_URL, 0, _AM_NOTHING_SELECTED);
             }
