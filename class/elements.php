@@ -126,13 +126,13 @@ class LiaiseElementsHandler
         }
         if (empty($ele_id) || $element->isNew()) {
             $ele_id = $this->db->genId($this->db_table . '_ele_id_seq');
-            $sql    = sprintf('INSERT INTO %s (
+            $sql    = sprintf('INSERT INTO `%s` (
                 ele_id, form_id, ele_type, ele_caption, ele_order, ele_req, ele_value, ele_display
                 ) VALUES (
                 %u, %u, %s, %s, %u, %u, %s, %u
                 )', $this->db_table, $ele_id, $form_id, $this->db->quoteString($ele_type), $this->db->quoteString($ele_caption), $ele_order, $ele_req, $this->db->quoteString($ele_value), $ele_display);
         } else {
-            $sql = sprintf('UPDATE %s SET
+            $sql = sprintf('UPDATE `%s` SET
                 form_id = %u,
                 ele_type = %s,
                 ele_caption = %s,

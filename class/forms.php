@@ -125,7 +125,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
         if ($form->isNew() || empty($form_id)) {
             $form_id = $this->db->genId($this->db_table . '_form_id_seq');
             $sql     = sprintf(
-                'INSERT INTO %s (
+                'INSERT INTO `%s` (
                 form_id, form_send_method, form_send_to_group, form_order, form_delimiter, form_title, form_submit_text, form_desc, form_intro, form_whereto
                 ) VALUES (
                 %u, %s, %s, %u, %s, %s, %s, %s, %s, %s
@@ -144,7 +144,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
             );
         } else {
             $sql = sprintf(
-                'UPDATE %s SET
+                'UPDATE `%s` SET
                 form_send_method = %s,
                 form_send_to_group = %s,
                 form_order = %u,
