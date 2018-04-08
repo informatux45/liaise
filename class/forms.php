@@ -168,7 +168,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
                 $form_id
             );
         }
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -192,7 +192,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
             return false;
         }
         $sql = 'DELETE FROM ' . $this->db_table . ' WHERE form_id=' . $form->getVar('form_id') . '';
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -295,7 +295,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
         if ($forms = $this->getObjects($criteria, 'home_list')) {
             $ret = [];
             foreach ($forms as $f) {
-                if (false != $modulepermHandler->checkRight($this->perm_name, $f->getVar('form_id'), $groups, $xoopsModule->getVar('mid'))) {
+                if (false !== $modulepermHandler->checkRight($this->perm_name, $f->getVar('form_id'), $groups, $xoopsModule->getVar('mid'))) {
                     $ret[] = $f;
                     unset($f);
                 }
@@ -311,7 +311,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
     {
         global $xoopsUser, $xoopsModule, $modulepermHandler;
         $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : 3;
-        if (false != $modulepermHandler->checkRight($this->perm_name, $form_id, $groups, $xoopsModule->getVar('mid'))) {
+        if (false !== $modulepermHandler->checkRight($this->perm_name, $form_id, $groups, $xoopsModule->getVar('mid'))) {
             return true;
         }
 

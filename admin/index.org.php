@@ -60,7 +60,7 @@ switch ($op) {
                 $order     = new \XoopsFormText('', 'order[' . $id . ']', 3, 2, $f->getVar('form_order'));
                 $group_mgr = xoops_getHandler('group');
                 $sendto    = $f->getVar('form_send_to_group');
-                if (false != $sendto && $group =& $group_mgr->get($sendto)) {
+                if (false !== $sendto && $group =& $group_mgr->get($sendto)) {
                     $sendto = $group->getVar('name');
                 } else {
                     $sendto = _AM_FORM_SENDTO_ADMIN;

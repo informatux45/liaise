@@ -135,7 +135,7 @@ class LiaiseElementsHandler
                 ele_display = %u
                 WHERE ele_id = %u', $this->db_table, $form_id, $this->db->quoteString($ele_type), $this->db->quoteString($ele_caption), $ele_order, $ele_req, $this->db->quoteString($ele_value), $ele_display, $ele_id);
         }
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -159,7 +159,7 @@ class LiaiseElementsHandler
             return false;
         }
         $sql = 'DELETE FROM ' . $this->db_table . ' WHERE ele_id=' . $element->getVar('ele_id') . '';
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);

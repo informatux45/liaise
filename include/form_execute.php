@@ -259,7 +259,7 @@ if ('p' === $form->getVar('form_send_method') && is_object($xoopsUser) && false 
     }
     $charset              = !empty($helper->getConfig('mail_charset')) ? $helper->getConfig('mail_charset') : _CHARSET;
     $xoopsMailer->charSet = $charset;
-    if (false != $group) {
+    if (false !== $group) {
         $xoopsMailer->setToGroups($group);
     } else {
         $xoopsMailer->setToEmails($xoopsConfig['adminmail']);

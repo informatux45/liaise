@@ -43,7 +43,7 @@ if (empty($_POST['submit'])) {
     $form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
     if (empty($form_id)) {
         $forms =& $liaise_form_mgr->getPermittedForms();
-        if (false != $forms && 1 === count($forms)) {
+        if (false !== $forms && 1 === count($forms)) {
             $form =& $liaise_form_mgr->get($forms[0]->getVar('form_id'));
             require_once __DIR__ . '/include/form_render.php';
         } else {
@@ -65,7 +65,7 @@ if (empty($_POST['submit'])) {
             header('Location: ' . LIAISE_URL);
             exit();
         } else {
-            if (false != $liaise_form_mgr->getSingleFormPermission($form_id)) {
+            if (false !== $liaise_form_mgr->getSingleFormPermission($form_id)) {
                 require_once __DIR__ . '/include/form_render.php';
             } else {
                 header('Location: ' . LIAISE_URL);

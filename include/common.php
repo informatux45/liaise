@@ -47,7 +47,7 @@ if (!defined('LIAISE_CONSTANTS_DEFINED')) {
 
 $liaise_form_mgr = xoops_getModuleHandler('forms');
 
-if (false != LIAISE_UPLOAD_PATH) {
+if (false !== LIAISE_UPLOAD_PATH) {
     if (!is_dir(LIAISE_UPLOAD_PATH)) {
         $oldumask = umask(0);
         mkdir(LIAISE_UPLOAD_PATH, 0777);
