@@ -34,13 +34,14 @@
 ###############################################################################
 
 use XoopsModules\Liaise;
-/** @var Liaise\Helper $helper */
-$helper = Liaise\Helper::getInstance();
 
 include __DIR__ . '/admin_header.php';
 $liaise_ele_mgr = xoops_getModuleHandler('elements');
 require_once LIAISE_ROOT_PATH . 'class/elementrenderer.php';
 define('_THIS_PAGE', LIAISE_URL . 'admin/editelement.php');
+
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
 $myts = \MyTextSanitizer::getInstance();
 if ($liaise_form_mgr->getCount() < 1) {
     redirect_header(LIAISE_ADMIN_URL, 0, _AM_GO_CREATE_FORM);

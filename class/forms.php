@@ -37,7 +37,7 @@ if (!defined('LIAISE_ROOT_PATH')) {
     exit();
 }
 
-class LiaiseForms extends XoopsObject
+class LiaiseForms extends \XoopsObject
 {
     public function __construct()
     {
@@ -56,7 +56,7 @@ class LiaiseForms extends XoopsObject
     }
 }
 
-class LiaiseFormsHandler extends XoopsObjectHandler
+class LiaiseFormsHandler extends \XoopsObjectHandler
 {
     public $db;
     public $db_table;
@@ -286,7 +286,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
 
     public function &getPermittedForms()
     {
-        global $xoopsUser, $xoopsModule, $modulepermHandler;
+        global $xoopsUser, $xoopsModule, $grouppermHandler;
         $groups   = is_object($xoopsUser) ? $xoopsUser->getGroups() : 3;
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('form_order', 1, '>='), 'OR');
@@ -295,7 +295,7 @@ class LiaiseFormsHandler extends XoopsObjectHandler
         if ($forms = $this->getObjects($criteria, 'home_list')) {
             $ret = [];
             foreach ($forms as $f) {
-                if (false !== $modulepermHandler->checkRight($this->perm_name, $f->getVar('form_id'), $groups, $xoopsModule->getVar('mid'))) {
+                if (false !== $grouppermHandler->checkRight($this->perm_name, $f->getVar('form_id'), $groups, $xoopsModule->getVar('mid'))) {
                     $ret[] = $f;
                     unset($f);
                 }
@@ -309,9 +309,9 @@ class LiaiseFormsHandler extends XoopsObjectHandler
 
     public function getSingleFormPermission($form_id)
     {
-        global $xoopsUser, $xoopsModule, $modulepermHandler;
+        global $xoopsUser, $xoopsModule, $grouppermHandler;
         $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : 3;
-        if (false !== $modulepermHandler->checkRight($this->perm_name, $form_id, $groups, $xoopsModule->getVar('mid'))) {
+        if (false !== $grouppermHandler->checkRight($this->perm_name, $form_id, $groups, $xoopsModule->getVar('mid'))) {
             return true;
         }
 

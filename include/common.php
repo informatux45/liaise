@@ -34,6 +34,8 @@
 ###############################################################################
 
 use XoopsModules\Liaise;
+
+
 /** @var Liaise\Helper $helper */
 $helper = Liaise\Helper::getInstance();
 

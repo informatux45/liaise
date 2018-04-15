@@ -39,8 +39,8 @@
 use XoopsModules\Liaise;
 
 // includes
-include __DIR__ . '/../../../include/cp_header.php';
-include __DIR__ . '/../include/common.php';
+include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include  dirname(__DIR__) . '/include/common.php';
 define('LIAISE_ADMIN_URL', LIAISE_URL . 'admin/index.php');
 define('_LIAISE_ADMIN_URL', LIAISE_URL . 'admin/');
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';

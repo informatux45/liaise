@@ -34,8 +34,6 @@
 ###############################################################################
 
 use XoopsModules\Liaise;
-/** @var Liaise\Helper $helper */
-$helper = Liaise\Helper::getInstance();
 
 
 if (!defined('LIAISE_ROOT_PATH')) {
@@ -53,6 +51,9 @@ $criteria->add(new \Criteria('ele_display', 1));
 $criteria->setSort('ele_order');
 $criteria->setOrder('ASC');
 $elements = $liaise_ele_mgr->getObjects($criteria, true);
+
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
 
 $form_output = new \XoopsThemeForm($form->getVar('form_title'), 'liaise_' . $form->getVar('form_id'), LIAISE_URL . 'index.php');
 foreach ($elements as $i) {

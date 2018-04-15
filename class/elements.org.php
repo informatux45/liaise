@@ -37,7 +37,7 @@ if (!defined('LIAISE_ROOT_PATH')) {
     exit();
 }
 
-class LiaiseElements extends XoopsObject
+class LiaiseElements extends \XoopsObject
 {
     public function __construct()
     {

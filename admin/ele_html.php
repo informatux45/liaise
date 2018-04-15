@@ -34,12 +34,13 @@
 ###############################################################################
 
 use XoopsModules\Liaise;
-/** @var Liaise\Helper $helper */
-$helper = Liaise\Helper::getInstance();
 
 if (!defined('LIAISE_ROOT_PATH')) {
     exit();
 }
+
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
 
 $rows    = !empty($value[1]) ? $value[1] : $helper->getConfig('ta_rows');
 $cols    = !empty($value[2]) ? $value[2] : $helper->getConfig('ta_cols');

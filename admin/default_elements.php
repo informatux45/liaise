@@ -34,12 +34,13 @@
 ###############################################################################
 
 use XoopsModules\Liaise;
-/** @var Liaise\Helper $helper */
-$helper = Liaise\Helper::getInstance();
 
 if (!defined('LIAISE_ROOT_PATH')) {
     exit();
 }
+
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
 
 $defaults               = [];
 $defaults[0]['caption'] = 'Your name';

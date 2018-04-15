@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  * Class LiaiseCorePreload
  */
-class LiaiseCorePreload extends XoopsPreloadItem
+class LiaiseCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**

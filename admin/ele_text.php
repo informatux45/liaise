@@ -34,12 +34,13 @@
 ###############################################################################
 
 use XoopsModules\Liaise;
-/** @var Liaise\Helper $helper */
-$helper = Liaise\Helper::getInstance();
 
 if (!defined('LIAISE_ROOT_PATH')) {
     exit();
 }
+
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
 
 $size    = !empty($value[0]) ? (int)$value[0] : $helper->getConfig('t_width');
 $max     = !empty($value[1]) ? (int)$value[1] : $helper->getConfig('t_max');

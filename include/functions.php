@@ -35,20 +35,20 @@
 
 function xoops_module_install_liaise(\XoopsModule $module)
 {
-    global $modulepermHandler;
+    $grouppermHandler = xoops_getHandler('groupperm');
     /*
     $msgs[] = 'Setting up default permissions...';
     $m = '&nbsp;&nbsp;Grant permission of form id %u to group id %u ......%s';
     */
     for ($i = 1; $i < 4; $i++) {
-        $perm = $modulepermHandler->create();
+        $perm = $grouppermHandler->create();
         $perm->setVar('gperm_name', 'xliaise_form_access');
         $perm->setVar('gperm_itemid', 1);
         $perm->setVar('gperm_groupid', $i);
         $perm->setVar('gperm_modid', $module->getVar('mid'));
-        $modulepermHandler->insert($perm);
+        $grouppermHandler->insert($perm);
         /*
-        if( !$modulepermHandler->insert($perm) ){
+        if( !$grouppermHandler->insert($perm) ){
             $msgs[] = sprintf($m, 1, $i, 'failed');
         }else{
             $msgs[] = sprintf($m, 1, $i, 'done');

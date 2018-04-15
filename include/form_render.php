@@ -38,8 +38,6 @@
 ###############################################################################
 
 use XoopsModules\Liaise;
-/** @var Liaise\Helper $helper */
-$helper = Liaise\Helper::getInstance();
 
 if (!defined('LIAISE_ROOT_PATH')) {
     exit();
@@ -48,6 +46,10 @@ if (!defined('LIAISE_ROOT_PATH')) {
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 $liaise_ele_mgr = xoops_getModuleHandler('elements');
 require_once LIAISE_ROOT_PATH . 'class/elementrenderer.php';
+
+/** @var Liaise\Helper $helper */
+$helper = Liaise\Helper::getInstance();
+
 // -------------------------------------------------------
 $GLOBALS['xoopsOption']['template_main'] = 'xliaise_form.html';
 // -------------------------------------------------------
