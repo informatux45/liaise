@@ -1,46 +1,34 @@
 <?php
-// 2006-12-20 K.OHWADA
-// use GIJOE's Ticket Class
 
-//
-###############################################################################
-##                Liaise -- Contact forms generator for XOOPS                ##
-##                 Copyright (c) 2003-2005 NS Tai (aka tuff)                 ##
-##                       <http://www.brandycoke.com>                        ##
-###############################################################################
-##                   XOOPS - PHP Content Management System                   ##
-##                       Copyright (c) 2000-2016 XOOPS.org                        ##
-##                          <https://xoops.org>                          ##
-###############################################################################
-##  This program is free software; you can redistribute it and/or modify     ##
-##  it under the terms of the GNU General Public License as published by     ##
-##  the Free Software Foundation; either version 2 of the License, or        ##
-##  (at your option) any later version.                                      ##
-##                                                                           ##
-##  You may not change or alter any portion of this comment or credits       ##
-##  of supporting developers from this source code or any supporting         ##
-##  source code which is considered copyrighted (c) material of the          ##
-##  original comment or credit authors.                                      ##
-##                                                                           ##
-##  This program is distributed in the hope that it will be useful,          ##
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of           ##
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            ##
-##  GNU General Public License for more details.                             ##
-##                                                                           ##
-##  You should have received a copy of the GNU General Public License        ##
-##  along with this program; if not, write to the Free Software              ##
-##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA ##
-###############################################################################
-##  Author of this file: NS Tai (aka tuff)                                   ##
-##  URL: http://www.brandycoke.com/                                          ##
-##  Project: Liaise                                                          ##
-###############################################################################
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ *
+ * @copyright   2003-2005 NS Tai (aka tuff) http://www.brandycoke.com
+ * @copyright   2003-2019 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      NS Tai (aka tuff) URL: http://www.brandycoke.com/
+ * @author      Kenichi OHWADA, http://linux2.ohwada.net/, Email:  webmaster@ohwada.jp
+ * @author      Patrice BOUTHIER, contact@informatux.com, https://informatux.com/
+ * @author      Michael Beck (aka Mamba), XOOPS Development Team
+ * @package     Liaise -- Contact forms generator for XOOPS
+ */
+
+use XoopsModules\Liaise;
 
 // Includes
-include __DIR__ . '/admin_header.php';
-$liaise_ele_mgr = xoops_getModuleHandler('elements');
+require_once __DIR__ . '/admin_header.php';
+$liaise_ele_mgr = $helper->getHandler('Elements');
 
-require_once LIAISE_ROOT_PATH . 'class/elementrenderer.php';
+//require_once LIAISE_ROOT_PATH . 'class/elementrenderer.php';
 
 define('_THIS_PAGE', LIAISE_URL . 'admin/elements.php');
 
@@ -49,7 +37,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
     if (empty($form_id)) {
         redirect_header(_LIAISE_ADMIN_URL, 0, _AM_NOTHING_SELECTED);
     }
-    $form =& $liaise_form_mgr->get($form_id);
+    $form = &$liaise_form_mgr->get($form_id);
 
     adminHtmlHeader('editelement.php');
 
@@ -94,19 +82,19 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
     $criteria->setSort('ele_order');
     $criteria->setOrder('ASC');
 
-    // --- GIJOE's Ticket Class ---
+    // --- Security Check ---
     $ticket = $GLOBALS['xoopsSecurity']->createToken();
     // ------
 
     if ($elements = $liaise_ele_mgr->getObjects($criteria)) {
         foreach ($elements as $i) {
             $id        = $i->getVar('ele_id');
-            $renderer  = new LiaiseElementRenderer($i);
+            $renderer  = new Liaise\ElementRenderer($i);
             $ele_type  = $i->getVar('ele_type');
             $req       = $i->getVar('ele_req');
             $check_req = new \XoopsFormCheckBox('', 'ele_req[' . $id . ']', $req);
             $check_req->addOption(1, ' ');
-            $ele_value     =& $renderer->constructElement(true);
+            $ele_value     = &$renderer->constructElement(true);
             $order         = $i->getVar('ele_order');
             $text_order    = new \XoopsFormText('', 'ele_order[' . $id . ']', 3, 2, $order);
             $display       = $i->getVar('ele_display');
@@ -125,7 +113,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
             echo '<td class="even" rowspan="2" align="center">' . $text_order->render() . "</td>\n";
             echo '<td class="even" rowspan="2" align="center">' . $check_display->render() . $hidden_id->render() . "</td>\n";
 
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             echo '<td class="even" nowrap="nowrap" rowspan="2">
                     <ul><li><a href="editelement.php?op=edit&amp;ele_id=' . $id . '&amp;form_id=' . $form_id . '">' . _EDIT . '</a></li>
                     <li><a href="editelement.php?op=edit&amp;ele_id=' . $id . '&amp;form_id=' . $form_id . '&amp;clone=1">' . _CLONE . '</a></li>';
@@ -153,14 +141,14 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
     echo $hidden_op->render();
     echo $hidden_form_id->render();
 
-    // --- GIJOE's Ticket Class ---
+    // --- Security Check ---
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
     // ------
 
     echo '</form>';
     adminHtmlFooter();
 } else {
-    // --- GIJOE's Ticket Class ---
+    // --- Security Check ---
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $err = 'Ticket Error <br>';
         $err .= $GLOBALS['xoopsSecurity']->getErrors();
@@ -175,7 +163,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
     extract($_POST, EXTR_OVERWRITE);
     $error = '';
     foreach ($ele_id as $id) {
-        $element =& $liaise_ele_mgr->get($id);
+        $element = &$liaise_ele_mgr->get($id);
         $req     = !empty($ele_req[$id]) ? 1 : 0;
         $element->setVar('ele_req', $req);
         $order = !empty($ele_order[$id]) ? (int)$ele_order[$id] : 0;
@@ -197,7 +185,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
                 $opt_count = 1;
                 if (isset($ele_value[$id])) {
                     if (is_array($ele_value[$id])) {
-//                        while ($j = each($value[2])) {
+                        //                        while ($j = each($value[2])) {
                         foreach (value[2] as $j) {
                             if (in_array($opt_count, $ele_value[$id])) {
                                 $new_vars[$j['key']] = 1;
@@ -208,7 +196,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
                         }
                     } else {
                         if (count($value[2]) > 1) {
-//                            while ($j = each($value[2])) {
+                            //                            while ($j = each($value[2])) {
                             foreach ($value[2] as $j) {
                                 if ($opt_count == $ele_value[$id]) {
                                     $new_vars[$j['key']] = 1;
@@ -218,7 +206,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
                                 $opt_count++;
                             }
                         } else {
-//                            while ($j = each($value[2])) {
+                            //                            while ($j = each($value[2])) {
                             foreach ($value[2] as $j) {
                                 if (!empty($ele_value[$id])) {
                                     $new_vars = [$j['key'] => 1];
@@ -239,7 +227,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
                 $new_vars  = [];
                 $opt_count = 1;
                 if (isset($ele_value[$id]) && is_array($ele_value[$id])) {
-//                    while ($j = each($value)) {
+                    //                    while ($j = each($value)) {
                     foreach ($value as $j) {
                         if (in_array($opt_count, $ele_value[$id])) {
                             $new_vars[$j['key']] = 1;
@@ -271,15 +259,15 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
             case 'yn':
                 $new_vars = [];
                 $i        = 1;
-            //                    while ($j = each($value)) {
-            foreach ($value as $j) {
-                if ($ele_value[$id] == $i) {
-                    $new_vars[$j['key']] = 1;
-                } else {
-                    $new_vars[$j['key']] = 0;
+                //                    while ($j = each($value)) {
+                foreach ($value as $j) {
+                    if ($ele_value[$id] == $i) {
+                        $new_vars[$j['key']] = 1;
+                    } else {
+                        $new_vars[$j['key']] = 0;
+                    }
+                    $i++;
                 }
-                $i++;
-            }
                 $value = $new_vars;
                 break;
             case 'uploadimg':
@@ -302,7 +290,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
         }
     }
     if (empty($error)) {
-        if (isset($_POST['submit2'])) {
+        if (\Xmf\Request::hasVar('submit2', 'POST')) {
             redirect_header(LIAISE_URL . 'admin/forms.php?op=edit&form_id=' . $form_id, 0, _AM_DBUPDATED);
         } else {
             redirect_header(_THIS_PAGE . '?form_id=' . $form_id, 0, _AM_DBUPDATED);
@@ -313,5 +301,5 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
         adminHtmlFooter();
     }
 }
-include __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 xoops_cp_footer();

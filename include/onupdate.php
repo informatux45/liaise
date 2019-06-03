@@ -20,8 +20,7 @@
 use XoopsModules\Liaise;
 
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()
-) {
+    || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
@@ -38,9 +37,8 @@ function tableExists($tablename)
 }
 
 /**
- *
  * Prepares system prior to attempting to install module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to install, false if not
  */
@@ -49,37 +47,34 @@ function xoops_module_pre_update_liaise(\XoopsModule $module)
     $moduleDirName = basename(dirname(__DIR__));
     /** @var Liaise\Helper $helper */
     /** @var Liaise\Utility $utility */
-    $helper       = Liaise\Helper::getInstance();
-    $utility      = new Liaise\Utility();
+    $helper  = Liaise\Helper::getInstance();
+    $utility = new Liaise\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
     return $xoopsSuccess && $phpSuccess;
 }
 
 /**
- *
  * Performs tasks required during update of the module
- * @param XoopsModule $module {@link XoopsModule}
- * @param null        $previousVersion
+ * @param \XoopsModule $module {@link XoopsModule}
+ * @param null         $previousVersion
  *
  * @return bool true if update successful, false if not
  */
-
 function xoops_module_update_liaise(\XoopsModule $module, $previousVersion = null)
 {
-    $moduleDirName = basename(dirname(__DIR__));
-    $capsDirName   = strtoupper($moduleDirName);
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-    /** @var Liaise\Helper $helper */
-    /** @var Liaise\Utility $utility */
+    /** @var Liaise\Helper $helper */ /** @var Liaise\Utility $utility */
     /** @var Liaise\Common\Configurator $configurator */
-    $helper  = Liaise\Helper::getInstance();
-    $utility = new Liaise\Utility();
+    $helper       = Liaise\Helper::getInstance();
+    $utility      = new Liaise\Utility();
     $configurator = new Liaise\Common\Configurator();
 
     if ($previousVersion < 240) {
-
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
             foreach ($configurator->templateFolders as $folder) {
@@ -131,7 +126,7 @@ function xoops_module_update_liaise(\XoopsModule $module, $previousVersion = nul
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file =  dirname(__DIR__) . '/assets/images/blank.png';
+            $file = dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
@@ -142,9 +137,11 @@ function xoops_module_update_liaise(\XoopsModule $module, $previousVersion = nul
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.html%\'';
         $GLOBALS['xoopsDB']->queryF($sql);
 
-        /** @var XoopsGroupPermHandler $grouppermHandler */
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
+
         return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
+
     return true;
 }

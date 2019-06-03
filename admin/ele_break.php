@@ -1,37 +1,26 @@
 <?php
-//
-###############################################################################
-##                Liaise -- Contact forms generator for XOOPS                ##
-##                 Copyright (c) 2003-2005 NS Tai (aka tuff)                 ##
-##                       <http://www.brandycoke.com>                        ##
-###############################################################################
-##                    XOOPS - PHP Content Management System                  ##
-##                       Copyright (c) 2000-2016 XOOPS.org                        ##
-##                          <https://xoops.org>                          ##
-###############################################################################
-##  This program is free software; you can redistribute it and/or modify     ##
-##  it under the terms of the GNU General Public License as published by     ##
-##  the Free Software Foundation; either version 2 of the License, or        ##
-##  (at your option) any later version.                                      ##
-##                                                                           ##
-##  You may not change or alter any portion of this comment or credits       ##
-##  of supporting developers from this source code or any supporting         ##
-##  source code which is considered copyrighted (c) material of the          ##
-##  original comment or credit authors.                                      ##
-##                                                                           ##
-##  This program is distributed in the hope that it will be useful,          ##
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of           ##
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            ##
-##  GNU General Public License for more details.                             ##
-##                                                                           ##
-##  You should have received a copy of the GNU General Public License        ##
-##  along with this program; if not, write to the Free Software              ##
-##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA ##
-###############################################################################
-##  Author of this file: NS Tai (aka tuff)                                   ##
-##  URL: http://www.brandycoke.com/                                          ##
-##  Project: Liaise                                                          ##
-###############################################################################
+
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ *
+ * @copyright   2003-2005 NS Tai (aka tuff) http://www.brandycoke.com
+ * @copyright   2003-2019 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      NS Tai (aka tuff) URL: http://www.brandycoke.com/
+ * @author      Kenichi OHWADA, http://linux2.ohwada.net/, Email:  webmaster@ohwada.jp
+ * @author      Patrice BOUTHIER, contact@informatux.com, https://informatux.com/
+ * @author      Michael Beck (aka Mamba), XOOPS Development Team
+ * @package     Liaise -- Contact forms generator for XOOPS
+ */
 if (!defined('LIAISE_ROOT_PATH')) {
     exit();
 }
@@ -40,7 +29,7 @@ if (!defined('LIAISE_ROOT_PATH')) {
 //$max = !empty($value[1]) ? (int)($value[1]) : $helper->getConfig('t_max');
 //$size = new \XoopsFormText(_AM_ELE_SIZE, 'ele_value[0]', 3, 3, $size);
 //$max = new \XoopsFormText(_AM_ELE_MAX_LENGTH, 'ele_value[1]', 3, 3, $max);
-//$default = new \XoopsFormText(_AM_ELE_DEFAULT, 'ele_value[2]', 50, 255, $myts->htmlspecialchars($myts->stripSlashesGPC($value[2])));
+//$default = new \XoopsFormText(_AM_ELE_DEFAULT, 'ele_value[2]', 50, 255, $myts->htmlSpecialChars($myts->stripSlashesGPC($value[2])));
 //$default->setDescription(_AM_ELE_TEXT_DESC);
 //$output->addElement($size, 1);
 //$output->addElement($max, 1);

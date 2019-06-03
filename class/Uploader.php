@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Liaise;
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -69,9 +72,7 @@
  * @author        Kazumi Ono <onokazu@xoops.org>
  * @copyright (c) 2000-2003 The Xoops Project - www.xoops.org
  */
-mt_srand((double)microtime() * 1000000);
-
-class LiaiseMediaUploader
+class Uploader
 {
     public $mediaName;
     public $mediaType;
@@ -110,16 +111,16 @@ class LiaiseMediaUploader
         $allowedExtensions = 0,
         $allowedMimeTypes = 0,
         $maxWidth = 0,
-        $maxHeight = 0
-    ) {
+        $maxHeight = 0)
+    {
         if (!empty($maxFileSize)) {
             $this->maxFileSize = (int)$maxFileSize;
         }
         if (!empty($allowedExtensions)) {
-            $this->allowedExtensions =& $allowedExtensions;
+            $this->allowedExtensions = &$allowedExtensions;
         }
         if (is_array($allowedMimeTypes)) {
-            $this->allowedMimeTypes =& $allowedMimeTypes;
+            $this->allowedMimeTypes = &$allowedMimeTypes;
         }
         if (!empty($maxWidth)) {
             $this->maxWidth = (int)$maxWidth;
@@ -146,7 +147,7 @@ class LiaiseMediaUploader
      * @return bool
      * @global       $HTTP_POST_FILES
      */
-    public function fetchMedia($media_name, $index = null, &$ele)
+    public function fetchMedia($media_name, $index, &$ele)
     {
         if (!isset($_FILES[$media_name])) {
             $this->setErrors('You either did not choose a file to upload or the server has insufficient read/writes to upload this file.');
@@ -413,9 +414,9 @@ class LiaiseMediaUploader
         if (isset($this->targetFileName)) {
             $this->savedFileName = $this->targetFileName;
         } elseif (isset($this->prefix)) {
-            $this->savedFileName = uniqid($this->prefix) . '.' . strtolower($matched[1]);
+            $this->savedFileName = uniqid($this->prefix) . '.' . mb_strtolower($matched[1]);
         } else {
-            $this->savedFileName = strtolower($this->mediaName);
+            $this->savedFileName = mb_strtolower($this->mediaName);
         }
         $this->savedFileName    = preg_replace('!\s+!', '_', $this->savedFileName);
         $this->savedDestination = $this->uploadDir . $this->savedFileName;
@@ -496,9 +497,9 @@ class LiaiseMediaUploader
     {
         if (count($this->allowedMimeTypes) > 0 && !in_array($this->mediaType, $this->allowedMimeTypes)) {
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 
     /**
@@ -508,14 +509,13 @@ class LiaiseMediaUploader
      **/
     public function checkExtension()
     {
-        $ext = substr(strrchr($this->mediaName, '.'), 1);
-        if (!empty($this->allowedExtensions) && !in_array(strtolower($ext), $this->allowedExtensions)) {
+        $ext = mb_substr(mb_strrchr($this->mediaName, '.'), 1);
+        if (!empty($this->allowedExtensions) && !in_array(mb_strtolower($ext), $this->allowedExtensions)) {
             return false;
-        } else {
-            $this->ext = $ext;
-
-            return true;
         }
+        $this->ext = $ext;
+
+        return true;
     }
 
     /**
@@ -531,23 +531,22 @@ class LiaiseMediaUploader
     /**
      * Get generated errors
      *
-     * @param  bool $ashtml Format using HTML?
+     * @param bool $ashtml Format using HTML?
      * @return array |string    Array of array messages OR HTML string
      */
     public function &getErrors($ashtml = true)
     {
         if (!$ashtml) {
             return $this->errors;
-        } else {
-            $ret = '';
-            if (count($this->errors) > 0) {
-                $ret = '<h4>Errors Returned While Uploading</h4>';
-                foreach ($this->errors as $error) {
-                    $ret .= $error . '<br>';
-                }
-            }
-
-            return $ret;
         }
+        $ret = '';
+        if (count($this->errors) > 0) {
+            $ret = '<h4>Errors Returned While Uploading</h4>';
+            foreach ($this->errors as $error) {
+                $ret .= $error . '<br>';
+            }
+        }
+
+        return $ret;
     }
 }

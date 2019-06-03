@@ -1,8 +1,6 @@
-<?php namespace XoopsModules\Liaise;
+<?php
 
-use Xmf\Request;
-use XoopsModules\Liaise;
-use XoopsModules\Liaise\Common;
+namespace XoopsModules\Liaise;
 
 /**
  * Class Utility

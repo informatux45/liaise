@@ -1,38 +1,27 @@
 <?php
-//
-###############################################################################
-##                Liaise -- Contact forms generator for XOOPS                ##
-##                 Copyright (c) 2003-2005 NS Tai (aka tuff)                 ##
-##                       <http://www.brandycoke.com>                        ##
-###############################################################################
-##                   XOOPS - PHP Content Management System                   ##
-##                       Copyright (c) 2000-2016 XOOPS.org                        ##
-##                          <https://xoops.org>                          ##
-###############################################################################
-##  This program is free software; you can redistribute it and/or modify     ##
-##  it under the terms of the GNU General Public License as published by     ##
-##  the Free Software Foundation; either version 2 of the License, or        ##
-##  (at your option) any later version.                                      ##
-##                                                                           ##
-##  You may not change or alter any portion of this comment or credits       ##
-##  of supporting developers from this source code or any supporting         ##
-##  source code which is considered copyrighted (c) material of the          ##
-##  original comment or credit authors.                                      ##
-##                                                                           ##
-##  This program is distributed in the hope that it will be useful,          ##
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of           ##
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            ##
-##  GNU General Public License for more details.                             ##
-##                                                                           ##
-##  You should have received a copy of the GNU General Public License        ##
-##  along with this program; if not, write to the Free Software              ##
-##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA ##
-###############################################################################
-##  Author of this file: NS Tai (aka tuff)                                   ##
-##  URL: http://www.brandycoke.com/                                          ##
-##  Project: Liaise                                                          ##
-###############################################################################
-include __DIR__ . '/admin_header.php';
+
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ *
+ * @copyright   2003-2005 NS Tai (aka tuff) http://www.brandycoke.com
+ * @copyright   2003-2019 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      NS Tai (aka tuff) URL: http://www.brandycoke.com/
+ * @author      Kenichi OHWADA, http://linux2.ohwada.net/, Email:  webmaster@ohwada.jp
+ * @author      Patrice BOUTHIER, contact@informatux.com, https://informatux.com/
+ * @author      Michael Beck (aka Mamba), XOOPS Development Team
+ * @package     Liaise -- Contact forms generator for XOOPS
+ */
+require_once __DIR__ . '/admin_header.php';
 $myts = \MyTextSanitizer::getInstance();
 $op   = isset($_GET['op']) ? trim($_GET['op']) : 'list';
 $op   = isset($_POST['op']) ? trim($_POST['op']) : $op;
@@ -41,7 +30,7 @@ switch ($op) {
     case 'list':
     default:
         adminHtmlHeader();
-        $criteria = new \Criteria(1, 1);
+        $criteria = new \Criteria('');
         $criteria->setSort('form_order');
         $criteria->setOrder('ASC');
         if ($forms = $liaise_form_mgr->getObjects($criteria, 'admin_list')) {
@@ -60,7 +49,7 @@ switch ($op) {
                 $order     = new \XoopsFormText('', 'order[' . $id . ']', 3, 2, $f->getVar('form_order'));
                 $group_mgr = xoops_getHandler('group');
                 $sendto    = $f->getVar('form_send_to_group');
-                if (false !== $sendto && $group =& $group_mgr->get($sendto)) {
+                if (false !== $sendto && $group = &$group_mgr->get($sendto)) {
                     $sendto = $group->getVar('name');
                 } else {
                     $sendto = _AM_FORM_SENDTO_ADMIN;
@@ -92,7 +81,6 @@ switch ($op) {
             echo $hidden->render() . "\n</form>\n";
         }
         break;
-
     case 'edit':
         $clone   = \Xmf\Request::getInt('clone', false, 'GET');
         $form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
@@ -154,7 +142,7 @@ switch ($op) {
                 $hidden_form_id = new \XoopsFormHidden('form_id', $form_id);
             }
         }
-        $output = new \XoopsThemeForm($caption, 'editform', LIAISE_ADMIN_URL);
+        $output = new \XoopsThemeForm($caption, 'editform', LIAISE_ADMIN_URL, 'post', true);
         $output->addElement($text_form_title, true);
         $output->addElement($select_form_group_perm);
         $output->addElement($select_form_send_method);
@@ -175,7 +163,6 @@ switch ($op) {
         $output->addElement($tray);
         $output->display();
         break;
-
     case 'delete':
         if (empty($_POST['ok'])) {
             adminHtmlHeader();
@@ -185,29 +172,27 @@ switch ($op) {
             if (empty($form_id)) {
                 redirect_header(LIAISE_ADMIN_URL, 0, _AM_NOTHING_SELECTED);
             }
-            $form =& $liaise_form_mgr->get($form_id);
+            $form = &$liaise_form_mgr->get($form_id);
             $liaise_form_mgr->delete($form);
-            $liaise_ele_mgr = xoops_getModuleHandler('elements');
+            $liaise_ele_mgr = $helper->getHandler('Elements');
             $criteria       = new \Criteria('form_id', $form_id);
             $liaise_ele_mgr->deleteAll($criteria);
             $liaise_form_mgr->deleteFormPermissions($form_id);
             redirect_header(LIAISE_ADMIN_URL, 0, _AM_DBUPDATED);
         }
         break;
-
     case 'saveorder':
         if (!isset($_POST['ids']) || count($_POST['ids']) < 1) {
             redirect_header(LIAISE_ADMIN_URL, 0, _AM_NOTHING_SELECTED);
         }
         extract($_POST);
         foreach ($ids as $id) {
-            $form =& $liaise_form_mgr->get($id);
+            $form = &$liaise_form_mgr->get($id);
             $form->setVar('form_order', $order[$id]);
             $liaise_form_mgr->insert($form);
         }
         redirect_header(LIAISE_ADMIN_URL, 0, _AM_DBUPDATED);
         break;
-
     case 'saveform':
         if (!isset($_POST['submit'])) {
             redirect_header(LIAISE_ADMIN_URL, 0, _AM_NOTHING_SELECTED);
@@ -236,13 +221,13 @@ switch ($op) {
                 $liaise_form_mgr->insertFormPermissions($ret, $form_group_perm);
             }
             if (!empty($clone_form_id)) {
-                $liaise_ele_mgr = xoops_getModuleHandler('elements');
+                $liaise_ele_mgr = $helper->getHandler('Elements');
                 $criteria       = new \Criteria('form_id', $clone_form_id);
                 $count          = $liaise_ele_mgr->getCount($criteria);
                 if ($count > 0) {
                     $elements = $liaise_ele_mgr->getObjects($criteria);
                     foreach ($elements as $e) {
-                        $cloned =& $e->xoopsClone();
+                        $cloned = &$e->xoopsClone();
                         $cloned->setVar('form_id', $ret);
                         if (!$liaise_ele_mgr->insert($cloned)) {
                             $error .= $cloned->getHtmlErrors();
@@ -250,7 +235,7 @@ switch ($op) {
                     }
                 }
             } elseif (empty($form_id)) {
-                $liaise_ele_mgr = xoops_getModuleHandler('elements');
+                $liaise_ele_mgr = $helper->getHandler('Elements');
                 $error          = $liaise_ele_mgr->insertDefaults($ret);
             }
         }
@@ -267,5 +252,5 @@ switch ($op) {
         break;
 }
 
-include __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 xoops_cp_footer();

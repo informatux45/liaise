@@ -1,6 +1,6 @@
 <?php
 
-//namespace XoopsModules\Liaise;
+namespace XoopsModules\Liaise;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -26,7 +26,7 @@
 
 use XoopsModules\Liaise;
 
-class ElementRenderer2
+class ElementRenderer
 {
     private $_ele;
 
@@ -44,8 +44,23 @@ class ElementRenderer2
         $e           = $this->_ele->getVar('ele_type');
         $delimiter   = $form->getVar('form_delimiter');
         $form_ele_id = $admin ? 'ele_value[' . $this->_ele->getVar('ele_id') . ']' : 'ele_' . $this->_ele->getVar('ele_id');
+
+        // --- reload ---
+        $post_val = null;
+        if (isset($_POST[$form_ele_id])) {
+            $post_val = $_POST[$form_ele_id];
+        }
+        // ---
+
         switch ($e) {
             case 'text':
+
+                // --- reload ---
+                if ($post_val) {
+                    $ele_value[2] = $post_val;
+                }
+                // ---
+
                 if (!is_object($xoopsUser)) {
                     $ele_value[2] = str_replace('{UNAME}', '', $ele_value[2]);
                     $ele_value[2] = str_replace('{EMAIL}', '', $ele_value[2]);
@@ -59,12 +74,26 @@ class ElementRenderer2
                 );
                 break;
             case 'textarea':
+
+                // --- reload ---
+                if ($post_val) {
+                    $ele_value[0] = $post_val;
+                }
+                // ---
+
                 $form_ele = new \XoopsFormTextArea($ele_caption, $form_ele_id, $myts->htmlSpecialChars($myts->stripSlashesGPC($ele_value[0])), //    default value
                                                    $ele_value[1],    //    rows
                                                    $ele_value[2]    //    cols
                 );
                 break;
             case 'html':
+
+                // --- reload ---
+                if ($post_val) {
+                    $ele_value[0] = $post_val;
+                }
+                // ---
+
                 global $check_req;
                 if (!$admin) {
                     $form_ele = new \XoopsFormLabel($ele_caption, $myts->displayTarea($myts->stripSlashesGPC($ele_value[0]), 1));
@@ -80,12 +109,32 @@ class ElementRenderer2
                 $selected  = [];
                 $options   = [];
                 $opt_count = 1;
-                //                while ($i = each($ele_value[2])) {
-                foreach ($ele_value[2] as $i) {
-                    $options[$opt_count] = $myts->stripSlashesGPC($i['key']);
-                    if ($i['value'] > 0) {
-                        $selected[] = $opt_count;
+                foreach ($ele_value[2] as $i => $value) {
+                    $options[$opt_count] = $myts->stripSlashesGPC($i);
+
+                    // --- reload ---
+                    //                    if( $i['value'] > 0 ){
+                    //                        $selected[] = $opt_count;
+                    //                    }
+                    if ($post_val) {
+                        if (is_array($post_val)) {
+                            foreach ($post_val as $val) {
+                                if ($val == $opt_count) {
+                                    $selected[] = $opt_count;
+                                }
+                            }
+                        } else {
+                            if ($post_val == $opt_count) {
+                                $selected[] = $opt_count;
+                            }
+                        }
+                    } else {
+                        if ($value > 0) {
+                            $selected[] = $opt_count;
+                        }
                     }
+                    // ---
+
                     $opt_count++;
                 }
                 $form_ele = new \XoopsFormSelect($ele_caption, $form_ele_id, $selected, $ele_value[0],    //    size
@@ -100,24 +149,44 @@ class ElementRenderer2
                 $selected  = [];
                 $options   = [];
                 $opt_count = 1;
-                //                while ($i = each($ele_value)) {
-                foreach ($ele_value as $i) {
-                    $options[$opt_count] = $i['key'];
-                    if ($i['value'] > 0) {
-                        $selected[] = $opt_count;
+                foreach ($ele_value as $i => $value) {
+                    $options[$opt_count] = $i;
+
+                    // --- reload ---
+                    //                    if( $i['value'] > 0 ){
+                    //                        $selected[] = $opt_count;
+                    //                    }
+                    if ($post_val) {
+                        if (is_array($post_val)) {
+                            foreach ($post_val as $val) {
+                                if ($val == $opt_count) {
+                                    $selected[] = $opt_count;
+                                }
+                            }
+                        } else {
+                            if ($post_val == $opt_count) {
+                                $selected[] = $opt_count;
+                            }
+                        }
+                    } else {
+                        if ($value > 0) {
+                            $selected[] = $opt_count;
+                        }
                     }
+                    // ---
+
                     $opt_count++;
                 }
 
                 $form_ele = new \XoopsFormElementTray($ele_caption, 'b' === $delimiter ? '<br>' : ' ');
-                //                while ($o = each($options)) {
-                foreach ($options as $o) {
-                    $t     = new \XoopsFormCheckBox('', $form_ele_id . '[]', $selected);
-                    $other = $this->optOther($o['value'], $form_ele_id);
+                foreach ($options as $o => $value) {
+                    $t     = new \XoopsFormCheckBox(// =&   -- INFORMATUX
+                        '', $form_ele_id . '[]', $selected);
+                    $other = $this->optOther($value, $form_ele_id);
                     if (false !== $other && !$admin) {
-                        $t->addOption($o['key'], _LIAISE_OPT_OTHER . $other);
+                        $t->addOption($o, _LIAISE_OPT_OTHER . $other);
                     } else {
-                        $t->addOption($o['key'], $myts->stripSlashesGPC($o['value']));
+                        $t->addOption($o, $myts->stripSlashesGPC($value));
                     }
                     $form_ele->addElement($t);
                 }
@@ -127,32 +196,45 @@ class ElementRenderer2
                 $selected  = '';
                 $options   = [];
                 $opt_count = 1;
-                //                while ($i = each($ele_value)) {
-                foreach ($ele_value as $i) {
+                foreach ($ele_value as $i => $value) {
                     switch ($e) {
                         case 'radio':
-                            $options[$opt_count] = $i['key'];
+                            //                            $options[$opt_count] = $i['key'];
+                            $options[$opt_count] = $i;
                             break;
                         case 'yn':
-                            $options[$opt_count] = constant($i['key']);
+                            $options[$opt_count] = constant($i);
                             break;
                     }
-                    if ($i['value'] > 0) {
-                        $selected = $opt_count;
+
+                    // --- reload ---
+                    //                    if( $i['value'] > 0 ){
+                    //                        $selected = $opt_count;
+                    //                    }
+                    if ($post_val) {
+                        if ($post_val == $opt_count) {
+                            $selected = $opt_count;
+                        }
+                    } else {
+                        if ($value > 0) {
+                            $selected = $opt_count;
+                        }
                     }
+                    // ---
+
                     $opt_count++;
                 }
                 switch ($delimiter) {
                     case 'b':
                         $form_ele = new \XoopsFormElementTray($ele_caption, '<br>');
-                        //                        while ($o = each($options)) {
-                        foreach ($options as $o) {
-                            $t     = new \XoopsFormRadio('', $form_ele_id, $selected);
-                            $other = $this->optOther($o['value'], $form_ele_id);
+                        foreach ($options as $o => $value) {
+                            $t     = new \XoopsFormRadio(// =&   -- INFORMATUX
+                                '', $form_ele_id, $selected);
+                            $other = $this->optOther($value, $form_ele_id);
                             if (false !== $other && !$admin) {
-                                $t->addOption($o['key'], _LIAISE_OPT_OTHER . $other);
+                                $t->addOption($o, _LIAISE_OPT_OTHER . $other);
                             } else {
-                                $t->addOption($o['key'], $myts->stripSlashesGPC($o['value']));
+                                $t->addOption($o, $myts->stripSlashesGPC($value));
                             }
                             $form_ele->addElement($t);
                         }
@@ -160,13 +242,12 @@ class ElementRenderer2
                     case 's':
                     default:
                         $form_ele = new \XoopsFormRadio($ele_caption, $form_ele_id, $selected);
-                        //                        while ($o = each($options)) {
-                        foreach ($options as $o) {
-                            $other = $this->optOther($o['value'], $form_ele_id);
+                        foreach ($options as $o => $value) {
+                            $other = $this->optOther($value, $form_ele_id);
                             if (false !== $other && !$admin) {
-                                $form_ele->addOption($o['key'], _LIAISE_OPT_OTHER . $other);
+                                $form_ele->addOption($o, _LIAISE_OPT_OTHER . $other);
                             } else {
-                                $form_ele->addOption($o['key'], $myts->stripSlashesGPC($o['value']));
+                                $form_ele->addOption($o, $myts->stripSlashesGPC($value));
                             }
                         }
                         break;
@@ -187,6 +268,18 @@ class ElementRenderer2
                     $form_ele = new \XoopsFormFile($ele_caption, $form_ele_id, $ele_value[0]);
                 }
                 break;
+            //  --- INFORMATUX
+            case 'break':
+                global $form_output, $xoopsDB;
+                //$form_output->insertBreak($myts->htmlSpecialChars($myts->stripSlashesGPC($ele_value[0])),'bg3');
+                $ele_id = str_replace('ele_', '', $form_ele_id);
+                $sql    = 'SELECT ele_caption FROM ' . $xoopsDB->prefix() . '_xliaise_formelements WHERE ele_id = ' . $ele_id;
+                $result = $xoopsDB->query($sql);
+                list($element_caption) = $xoopsDB->fetchRow($result);
+                $form_ele = new \XoopsFormElementTray($myts->htmlSpecialChars($myts->stripSlashesGPC('[BREAK]' . $element_caption)), '&nbsp;');
+                break;
+            // ---------------
+
             default:
                 $form_ele = false;
                 break;
@@ -204,7 +297,18 @@ class ElementRenderer2
         }
         $s   = explode('|', preg_replace('/[\{\}]/', '', $s));
         $len = !empty($s[1]) ? $s[1] : $helper->getConfig('t_width');
-        $box = new \XoopsFormText('', 'other[' . $id . ']', $len, 255);
+
+        // --- reload ---
+        //        $box = new \XoopsFormText('', 'other['.$id.']', $len, 255);
+        $val = null;
+        if (isset($_POST['other'][$id])) {
+            $myts = \MyTextSanitizer::getInstance();
+            $val  = $_POST['other'][$id];
+            $val  = $myts->htmlSpecialChars($myts->stripSlashesGPC($val));
+        }
+        $box = new \XoopsFormText('', 'other[' . $id . ']', $len, 255, $val);
+
+        // ------
 
         return $box->render();
     }

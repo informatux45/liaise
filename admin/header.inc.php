@@ -1,15 +1,26 @@
 <?php
-/* ******************************************* */
-/*                INFORMATUX                   */
-/*         http://www.informatux.com/          */
-/*       SOLUTIONS AND WEB DEVELOPMENT         */
-/*             Patrice BOUTHIER                */
-/*                   2015                      */
-/* ------------------------------------------- */
-/*    XOOPS - PHP Content Management System    */
-/*         Copyright (c) 2000-2016 XOOPS.org        */
-/*            <https://xoops.org>          */
-/* ******************************************* */
+
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ *
+ * @copyright   2003-2005 NS Tai (aka tuff) http://www.brandycoke.com
+ * @copyright   2003-2019 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      NS Tai (aka tuff) URL: http://www.brandycoke.com/
+ * @author      Kenichi OHWADA, http://linux2.ohwada.net/, Email:  webmaster@ohwada.jp
+ * @author      Patrice BOUTHIER, contact@informatux.com, https://informatux.com/
+ * @author      Michael Beck (aka Mamba), XOOPS Development Team
+ * @package     Liaise -- Contact forms generator for XOOPS
+ */
 
 function getFormsCount($form_order = false, $created = true)
 {
@@ -51,10 +62,10 @@ function getFormTitle($form_id)
         $result = $xoopsDB->query($sql);
         if (!$result) {
             return false;
-        } else {
-            return $xoopsDB->fetchArray($result);
         }
-    } else {
-        return false;
+
+        return $xoopsDB->fetchArray($result);
     }
+
+    return false;
 }

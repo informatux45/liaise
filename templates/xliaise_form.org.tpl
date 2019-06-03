@@ -27,4 +27,5 @@
     <{/foreach}>
     <{if $form_text_global != ""}>
         <div><{$form_text_global}></div><{/if}>
+    <{securityToken}>
 </form>

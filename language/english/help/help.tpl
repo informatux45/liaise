@@ -2,7 +2,7 @@
     <h1 class='head'>Help:
         <a class='ui-corner-all tooltip' href='<{$xoops_url}>/modules/liaise/admin/index.php'
            title='Back to the administration of LIAISE'> LIAISE <img src='<{xoAdminIcons home.png}>'
-                                                                     alt='Back to the Administration of MyModule'>
+                                                                     alt='Back to the Administration of Module'/>
         </a></h1>
     <!-- -----Help Content ---------- -->
     <h4 class='odd'>Description</h4>

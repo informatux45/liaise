@@ -1,5 +1,7 @@
 <?php
 
+namespace XoopsModules\Liaise;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -21,18 +23,25 @@
  * @author      Michael Beck (aka Mamba), XOOPS Development Team
  * @package     Liaise -- Contact forms generator for XOOPS
  */
-require_once __DIR__ . '/admin_header.php';
-$file = isset($_GET['f']) ? trim($_GET['f']) : '';
-$path = LIAISE_UPLOAD_PATH . $file;
-if (!$file || !preg_match('/^[0-9]+_{1}[0-9a-z]+\.[0-9a-z]+$/', $file) || !file_exists($path)) {
-    redirect_header(XOOPS_URL, 0, _AM_NOTHING_SELECTED);
+
+if (!defined('LIAISE_ROOT_PATH')) {
+    exit();
 }
 
-header('Content-Type: application/octet-stream');
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Cache-Control: private, no-cache');
-header('Pragma: no-cache');
-header('Content-Disposition: attachment; filename="' . $file . '"');
-header('Content-Length: ' . filesize($path));
-
-readfile($path);
+class Elements extends \XoopsObject
+{
+    public function __construct()
+    {
+        //        parent::__construct;
+        parent::__construct();
+        //    key, data_type, value, req, max, opt
+        $this->initVar('ele_id', XOBJ_DTYPE_INT, null, false);
+        $this->initVar('form_id', XOBJ_DTYPE_INT);
+        $this->initVar('ele_type', XOBJ_DTYPE_TXTBOX, null, true, 10);
+        $this->initVar('ele_caption', XOBJ_DTYPE_TXTBOX, '', false, 255);
+        $this->initVar('ele_order', XOBJ_DTYPE_INT, 0);
+        $this->initVar('ele_req', XOBJ_DTYPE_INT);
+        $this->initVar('ele_value', XOBJ_DTYPE_ARRAY, '');
+        $this->initVar('ele_display', XOBJ_DTYPE_INT);
+    }
+}

@@ -1,33 +1,26 @@
 <?php
-//
-###############################################################################
-##                Liaise -- Contact forms generator for XOOPS                ##
-##                 Copyright (c) 2003-2005 NS Tai (aka tuff)                 ##
-##                       <http://www.brandycoke.com>                        ##
-###############################################################################
-##                   XOOPS - PHP Content Management System                   ##
-##                       Copyright (c) 2000-2016 XOOPS.org                        ##
-##                          <https://xoops.org>                          ##
-###############################################################################
-##  This program is free software; you can redistribute it and/or modify     ##
-##  it under the terms of the GNU General Public License as published by     ##
-##  the Free Software Foundation; either version 2 of the License, or        ##
-##  (at your option) any later version.                                      ##
-##                                                                           ##
-##  You may not change or alter any portion of this comment or credits       ##
-##  of supporting developers from this source code or any supporting         ##
-##  source code which is considered copyrighted (c) material of the          ##
-##  original comment or credit authors.                                      ##
-##                                                                           ##
-##  This program is distributed in the hope that it will be useful,          ##
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of           ##
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            ##
-##  GNU General Public License for more details.                             ##
-##                                                                           ##
-##  You should have received a copy of the GNU General Public License        ##
-##  along with this program; if not, write to the Free Software              ##
-##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA ##
-###############################################################################
+
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ *
+ * @copyright   2003-2005 NS Tai (aka tuff) http://www.brandycoke.com
+ * @copyright   2003-2019 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      NS Tai (aka tuff) URL: http://www.brandycoke.com/
+ * @author      Kenichi OHWADA, http://linux2.ohwada.net/, Email:  webmaster@ohwada.jp
+ * @author      Patrice BOUTHIER, contact@informatux.com, https://informatux.com/
+ * @author      Michael Beck (aka Mamba), XOOPS Development Team
+ * @package     Liaise -- Contact forms generator for XOOPS
+ */
 
 $modversion['name']        = _MI_LIAISE_NAME;
 $modversion['version']     = '1.26';
@@ -60,11 +53,11 @@ $modversion['hasMain'] = 1;
 $modversion['onInstall'] = 'include/functions.php';
 
 // Templates
-$modversion['templates'][1]['file']        = 'liaise_index.html';
+$modversion['templates'][1]['file']        = 'liaise_index.tpl';
 $modversion['templates'][1]['description'] = _MI_LIAISE_TMPL_MAIN_DESC;
-$modversion['templates'][2]['file']        = 'liaise_form.html';
+$modversion['templates'][2]['file']        = 'liaise_form.tpl';
 $modversion['templates'][2]['description'] = _MI_LIAISE_TMPL_FORM_DESC;
-$modversion['templates'][3]['file']        = 'liaise_error.html';
+$modversion['templates'][3]['file']        = 'liaise_error.tpl';
 $modversion['templates'][3]['description'] = _MI_LIAISE_TMPL_ERROR_DESC;
 
 //    Module Configs
@@ -111,7 +104,7 @@ $modversion['config'][5]['options']     = [
     _MI_LIAISE_MOREINFO_USER  => 'user',
     _MI_LIAISE_MOREINFO_IP    => 'ip',
     _MI_LIAISE_MOREINFO_AGENT => 'agent',
-    _MI_LIAISE_MOREINFO_FORM  => 'form'
+    _MI_LIAISE_MOREINFO_FORM  => 'form',
 ];
 
 // $helper->getConfig('mail_charset')

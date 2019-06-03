@@ -1,47 +1,36 @@
 <?php
-//
-###############################################################################
-##                Liaise -- Contact forms generator for XOOPS                ##
-##                 Copyright (c) 2003-2005 NS Tai (aka tuff)                 ##
-##                       <http://www.brandycoke.com>                        ##
-###############################################################################
-##                   XOOPS - PHP Content Management System                   ##
-##                       Copyright (c) 2000-2016 XOOPS.org                        ##
-##                          <https://xoops.org>                          ##
-###############################################################################
-##  This program is free software; you can redistribute it and/or modify     ##
-##  it under the terms of the GNU General Public License as published by     ##
-##  the Free Software Foundation; either version 2 of the License, or        ##
-##  (at your option) any later version.                                      ##
-##                                                                           ##
-##  You may not change or alter any portion of this comment or credits       ##
-##  of supporting developers from this source code or any supporting         ##
-##  source code which is considered copyrighted (c) material of the          ##
-##  original comment or credit authors.                                      ##
-##                                                                           ##
-##  This program is distributed in the hope that it will be useful,          ##
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of           ##
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            ##
-##  GNU General Public License for more details.                             ##
-##                                                                           ##
-##  You should have received a copy of the GNU General Public License        ##
-##  along with this program; if not, write to the Free Software              ##
-##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA ##
-###############################################################################
-##  Author of this file: NS Tai (aka tuff)                                   ##
-##  URL: http://www.brandycoke.com/                                          ##
-##  Project: Liaise                                                          ##
-###############################################################################
-include __DIR__ . '/admin_header.php';
-$liaise_ele_mgr = xoops_getModuleHandler('elements');
-require_once LIAISE_ROOT_PATH . 'class/elementrenderer.php';
+
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ *
+ * @copyright   2003-2005 NS Tai (aka tuff) http://www.brandycoke.com
+ * @copyright   2003-2019 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      NS Tai (aka tuff) URL: http://www.brandycoke.com/
+ * @author      Kenichi OHWADA, http://linux2.ohwada.net/, Email:  webmaster@ohwada.jp
+ * @author      Patrice BOUTHIER, contact@informatux.com, https://informatux.com/
+ * @author      Michael Beck (aka Mamba), XOOPS Development Team
+ * @package     Liaise -- Contact forms generator for XOOPS
+ */
+require_once __DIR__ . '/admin_header.php';
+$liaise_ele_mgr = $helper->getHandler('Elements');
+//require_once LIAISE_ROOT_PATH . 'class/elementrenderer.php';
 define('_THIS_PAGE', LIAISE_URL . 'admin/elements.php');
 if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
     $form_id = \Xmf\Request::getInt('form_id', 0, 'GET');
     if (empty($form_id)) {
         redirect_header(LIAISE_ADMIN_URL, 0, _AM_NOTHING_SELECTED);
     }
-    $form =& $liaise_form_mgr->get($form_id);
+    $form = &$liaise_form_mgr->get($form_id);
     adminHtmlHeader();
     $jump    = [];
     $jump[0] = new \XoopsFormSelect('', 'ele_type');
@@ -54,7 +43,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
                                  'yn'        => _AM_ELE_YN,
                                  'html'      => _AM_ELE_HTML,
                                  'uploadimg' => _AM_ELE_UPLOADIMG,
-                                 'upload'    => _AM_ELE_UPLOADFILE
+                                 'upload'    => _AM_ELE_UPLOADFILE,
                              ]);
     $jump[1] = new \XoopsFormHidden('op', 'edit');
     $jump[2] = new \XoopsFormHidden('form_id', $form_id);
@@ -86,12 +75,12 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
     if ($elements = $liaise_ele_mgr->getObjects($criteria)) {
         foreach ($elements as $i) {
             $id        = $i->getVar('ele_id');
-            $renderer  = new LiaiseElementRenderer($i);
+            $renderer  = new ElementRenderer($i);
             $ele_type  = $i->getVar('ele_type');
             $req       = $i->getVar('ele_req');
             $check_req = new \XoopsFormCheckBox('', 'ele_req[' . $id . ']', $req);
             $check_req->addOption(1, ' ');
-            $ele_value     =& $renderer->constructElement(true);
+            $ele_value     = &$renderer->constructElement(true);
             $order         = $i->getVar('ele_order');
             $text_order    = new \XoopsFormText('', 'ele_order[' . $id . ']', 3, 2, $order);
             $display       = $i->getVar('ele_display');
@@ -136,7 +125,7 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
     extract($_POST);
     $error = '';
     foreach ($ele_id as $id) {
-        $element =& $liaise_ele_mgr->get($id);
+        $element = &$liaise_ele_mgr->get($id);
         $req     = !empty($ele_req[$id]) ? 1 : 0;
         $element->setVar('ele_req', $req);
         $order = !empty($ele_order[$id]) ? (int)$ele_order[$id] : 0;
@@ -241,10 +230,10 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
                     }
                     $i++;
                 }
-        $value = $new_vars;
-        break;
-    case
-        'uploadimg':
+                $value = $new_vars;
+                break;
+            case
+            'uploadimg':
                 $value[0] = (int)$ele_value[$id][0];
                 $value[4] = (int)$ele_value[$id][4];
                 $value[5] = (int)$ele_value[$id][5];
@@ -271,5 +260,5 @@ if (!isset($_POST['op']) || 'save' !== $_POST['op']) {
         echo $error;
     }
 }
-include __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 xoops_cp_footer();

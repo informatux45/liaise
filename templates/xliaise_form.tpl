@@ -55,5 +55,6 @@
         <{/foreach}>
         <{if $form_text_global != ""}>
             <div><{$form_text_global|@html_entity_decode}></div><{/if}>
+        <{securityToken}>
     </form>
 </div>

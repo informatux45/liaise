@@ -1,54 +1,38 @@
 <?php
-// 2006-12-20 K.OHWADA
-// use GIJOE's Ticket Class
-// new file INFORMATUX
 
-//
-###############################################################################
-##                Liaise -- Contact forms generator for XOOPS                ##
-##                 Copyright (c) 2003-2005 NS Tai (aka tuff)                 ##
-##                       <http://www.brandycoke.com>                        ##
-###############################################################################
-##                   XOOPS - PHP Content Management System                   ##
-##                       Copyright (c) 2000-2016 XOOPS.org                        ##
-##                          <https://xoops.org>                          ##
-###############################################################################
-##  This program is free software; you can redistribute it and/or modify     ##
-##  it under the terms of the GNU General Public License as published by     ##
-##  the Free Software Foundation; either version 2 of the License, or        ##
-##  (at your option) any later version.                                      ##
-##                                                                           ##
-##  You may not change or alter any portion of this comment or credits       ##
-##  of supporting developers from this source code or any supporting         ##
-##  source code which is considered copyrighted (c) material of the          ##
-##  original comment or credit authors.                                      ##
-##                                                                           ##
-##  This program is distributed in the hope that it will be useful,          ##
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of           ##
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            ##
-##  GNU General Public License for more details.                             ##
-##                                                                           ##
-##  You should have received a copy of the GNU General Public License        ##
-##  along with this program; if not, write to the Free Software              ##
-##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA ##
-###############################################################################
-##  Author of this file: NS Tai (aka tuff) / INFORMATUX [www.informatux.com] ##
-##  URL: http://www.brandycoke.com/                                          ##
-##  Project: Liaise                                                          ##
-###############################################################################
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
 
-include __DIR__ . '/admin_header.php';
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ *
+ * @copyright   2003-2005 NS Tai (aka tuff) http://www.brandycoke.com
+ * @copyright   2003-2019 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      NS Tai (aka tuff) URL: http://www.brandycoke.com/
+ * @author      Kenichi OHWADA, http://linux2.ohwada.net/, Email:  webmaster@ohwada.jp
+ * @author      Patrice BOUTHIER, contact@informatux.com, https://informatux.com/
+ * @author      Michael Beck (aka Mamba), XOOPS Development Team
+ * @package     Liaise -- Contact forms generator for XOOPS
+ */
+
+require_once __DIR__ . '/admin_header.php';
 $myts = \MyTextSanitizer::getInstance();
 $op   = isset($_GET['op']) ? trim($_GET['op']) : false;
 $op   = isset($_POST['op']) ? trim($_POST['op']) : $op;
 
 switch ($op) {
-
     case 'list':
     default:
         global $xoopsDB;
         adminHtmlHeader('forms.php');
-        $criteria = new \Criteria(1, 1);
+        $criteria = new \Criteria('');
         $criteria->setSort('form_order');
         $criteria->setOrder('ASC');
         if ($forms = $liaise_form_mgr->getObjects($criteria, 'admin_list')) {
@@ -63,7 +47,7 @@ switch ($op) {
                         <td class="head" align="center">' . _AM_ACTION . '</td>
                     </tr>';
 
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             $ticket = $GLOBALS['xoopsSecurity']->createToken();
             // ------
 
@@ -72,7 +56,7 @@ switch ($op) {
                 $order     = new \XoopsFormText('', 'order[' . $id . ']', 3, 2, $f->getVar('form_order'));
                 $group_mgr = xoops_getHandler('group');
                 $sendto    = $f->getVar('form_send_to_group');
-                if (false !== $sendto && $group =& $group_mgr->get($sendto)) {
+                if (false !== $sendto && $group = $group_mgr->get($sendto)) {
                     $sendto = $group->getVar('name');
                 } else {
                     $sendto = _AM_FORM_SENDTO_ADMIN;
@@ -110,7 +94,7 @@ switch ($op) {
                     </tr>
                     </table>';
 
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
             // ------
 
@@ -119,7 +103,6 @@ switch ($op) {
         }
         adminHtmlFooter();
         break;
-
     case 'archive':
         global $xoopsDB;
         adminHtmlHeader('forms.php');
@@ -142,7 +125,7 @@ switch ($op) {
             </tr>';
 
         if ($archive) {
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             $ticket = $GLOBALS['xoopsSecurity']->createToken();
             // ----------------------------
             foreach ($archive as $row) {
@@ -152,19 +135,18 @@ switch ($op) {
                     <td class="odd" align="center">' . truncate(strip_tags($row['form_message']), 40, '..') . '</td>
                     <td class="odd">
                         <ul>
-                            <li><a href="#" onclick="window.open(\'' . _LIAISE_ADMIN_URL . 'forms.php?op=archive_view&amp;form_id=' . $row['form_id'] . '&amp;msg_id=' . $row['id'] . '\', \'Message\', \'menubar=no, status=no, scrollbars=yes, menubar=no, width=550, height=420\');">Visualiser</a></li>
+                            <li><a href="#" onclick="window.open(\'' . _LIAISE_ADMIN_URL . 'forms.php?op=archive_view&amp;form_id=' . $row['form_id'] . '&amp;msg_id=' . $row['id'] . '\', \'Message\', \'menubar=no, status=no, scrollbars=yes, menubar=no, width=550, height=420\');">'._AM_ELE_VIEW.'</a></li>
                             <li><a href="' . _LIAISE_ADMIN_URL . 'forms.php?op=archive_delete&amp;msg_id=' . $row['id'] . '&amp;XOOPS_G_TICKET=' . $ticket . '">' . _DELETE . '</a></li>
                          </ul>
                     </td>
                     </tr>';
             }
         } else {
-            echo '<tr><th colspan="4" class="odd"><span style="font-size: 1.2em; font-weight: bold; color: red;">Pas de message pour ce formulaire</span></th></tr>';
+            echo '<tr><th colspan="4" class="odd"><span style="font-size: 1.2em; font-weight: bold; color: red;">'._AM_XLIAISE_ARCHIVE_ALL_NO_MSG.'</span></th></tr>';
         }
 
         echo '</table>';
         break;
-
     case 'archive_all':
         global $xoopsDB;
         adminHtmlHeader('forms.php');
@@ -173,27 +155,23 @@ switch ($op) {
         $archive = dbResultToArray($result);
 
         echo '<table class="outer" cellspacing="1" width="100%">
-            <tr><th colspan="5">Tous les messages post&eacute;s sur les formulaires</th></tr>
+            <tr><th colspan="5">'._AM_XLIAISE_ARCHIVE_ALL_POSTED_MSG.'</th></tr>
             <tr>
                 <td class="head" align="center">' . _AM_ID . '</td>
-                <td class="head" align="center">Date</td>
-                <td class="head" align="center">Formulaire</td>
-                <td class="head" align="center">Message</td>
+				<td class="head" align="center">'._AM_XLIAISE_ARCHIVE_ALL_DATE.'</td>
+				<td class="head" align="center">'._AM_XLIAISE_ARCHIVE_ALL_FORM.'</td>
+				<td class="head" align="center">'._AM_XLIAISE_ARCHIVE_ALL_MESSAGE.'</td>
                 <td class="head" align="center">' . _AM_ACTION . '</td>
             </tr>';
 
         if ($archive) {
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             $ticket = $GLOBALS['xoopsSecurity']->createToken();
             // ----------------------------
             foreach ($archive as $row) {
-                if ('0' == $row['form_id']) {
-                    $form_name['form_title'] = 'Demande de rappel';
-                } else {
                     $form_name_sql = 'SELECT form_title FROM ' . $xoopsDB->prefix('xliaise_forms') . ' WHERE form_id = "' . $row['form_id'] . '"';
                     $result_name   = $xoopsDB->query($form_name_sql);
                     $form_name     = $xoopsDB->fetchArray($result_name);
-                }
 
                 echo '<tr>
                     <td class="odd" align="center">' . $row['id'] . '</td>
@@ -202,20 +180,19 @@ switch ($op) {
                     <td class="even" align="center">' . truncate(strip_tags($row['form_message']), 40, '..') . '</td>
                     <td class="odd">
                         <ul>
-                            <li><a href="#" onclick="window.open(\'' . _LIAISE_ADMIN_URL . 'forms.php?op=archive_view&amp;form_id=' . $row['form_id'] . '&amp;msg_id=' . $row['id'] . '\', \'Message\', \'menubar=no, status=no, scrollbars=yes, menubar=no, width=550, height=620\');">Visualiser</a></li>
+                            <li><a href="#" onclick="window.open(\'' . _LIAISE_ADMIN_URL . 'forms.php?op=archive_view&amp;form_id=' . $row['form_id'] . '&amp;msg_id=' . $row['id'] . '\', \'Message\', \'menubar=no, status=no, scrollbars=yes, menubar=no, width=550, height=620\');">'._AM_ELE_DISPLAY.'</a></li>
                             <li><a href="' . _LIAISE_ADMIN_URL . 'forms.php?op=archive_delete&amp;msg_id=' . $row['id'] . '&amp;XOOPS_G_TICKET=' . $ticket . '">' . _DELETE . '</a></li>
                          </ul>
                     </td>
                     </tr>';
             }
         } else {
-            echo '<tr><th colspan="5" class="odd"><span style="font-size: 1.2em; font-weight: bold; color: red;">' . _AM_XLIAISE_NO_MESSAGES . '</span></th></tr>';
+            echo '<tr><th colspan="5" class="odd"><span style="font-size: 1.2em; font-weight: bold; color: red;">' . _AM_XLIAISE_ARCHIVE_ALL_NO_MSG . '</span></th></tr>';
         }
 
         echo '</table>';
         adminHtmlFooter();
         break;
-
     case 'archive_view':
         global $xoopsDB;
         adminHtmlHeaderPopup();
@@ -231,15 +208,14 @@ switch ($op) {
         $result_name   = $xoopsDB->query($form_name_sql);
         $form_name     = $xoopsDB->fetchArray($result_name);
 
-        echo '<u>FORMULAIRE :</u> ' . $form_name['form_title'];
-        echo '<br><br><u>DATE :</u> ' . formatDate($msg_info['form_date']);
-        echo '<br><br><u>MESSAGE :</u><br>';
+		echo '<u>'._AM_XLIAISE_ARCHIVE_VIEW_FORM.' :</u> '.$form_name['form_title'];
+		echo '<br><br><u>'._AM_XLIAISE_ARCHIVE_VIEW_DATE.' :</u> '.formatDate($msg_info['form_date']);
+		echo '<br><br><u>'._AM_XLIAISE_ARCHIVE_VIEW_MESSAGE.' :</u><br>';
         echo nl2br($msg_info['form_message']);
         break;
-
     case 'archive_delete':
         if (empty($_POST['ok'])) {
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             if (!$GLOBALS['xoopsSecurity']->check(false)) {
                 $err = 'Ticket Error <br>';
                 $err .= $GLOBALS['xoopsSecurity']->getErrors();
@@ -247,17 +223,17 @@ switch ($op) {
             }
             // ----------------------------
             adminHtmlHeader('forms.php');
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             $ticket = $GLOBALS['xoopsSecurity']->createToken();
             xoops_confirm([
                               'op'             => 'archive_delete',
                               'msg_id'         => $_GET['msg_id'],
                               'ok'             => 1,
-                              'XOOPS_G_TICKET' => $ticket
-                          ], _LIAISE_ADMIN_URL . 'forms.php', 'Etes vous s&ucirc;r de vouloir supprimer ce message ?');
-        // ----------------------------
+                              'XOOPS_G_TICKET' => $ticket,
+                          ], _LIAISE_ADMIN_URL . 'forms.php', _AM_XLIAISE_ARCHIVE_DELETE_CONFIRM);
+            // ----------------------------
         } else {
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 $err = 'Ticket Error <br>';
                 $err .= $GLOBALS['xoopsSecurity']->getErrors();
@@ -272,13 +248,12 @@ switch ($op) {
             $sql    = 'DELETE FROM ' . $xoopsDB->prefix('xliaise_forms_archive') . ' WHERE id = "' . $msg_id . '"';
             $result = $xoopsDB->query($sql);
             if (!$result) {
-                redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 3, 'Erreur lors de la mise a jour');
+                redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 3, _AM_DBERROR);
             } else {
                 redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 3, _AM_DBUPDATED);
             }
         }
         break;
-
     case 'edit':
         adminHtmlHeader('forms.php');
 
@@ -342,7 +317,7 @@ switch ($op) {
                 $hidden_form_id = new \XoopsFormHidden('form_id', $form_id);
             }
         }
-        $output = new \XoopsThemeForm($caption, 'editform', _LIAISE_ADMIN_URL . 'forms.php');
+        $output = new \XoopsThemeForm($caption, 'editform', _LIAISE_ADMIN_URL . 'forms.php', 'post', true);
         $output->addElement($text_form_title, true);
         $output->addElement($select_form_group_perm);
         $output->addElement($select_form_send_method);
@@ -362,18 +337,16 @@ switch ($op) {
         }
         $output->addElement($tray);
 
-        // --- GIJOE's Ticket Class ---
+        // --- Security Check ---
         //        $output->addElement($xoopsGTicket->getTicketXoopsForm(__LINE__));
         // ------
 
         $output->display();
         adminHtmlFooter();
         break;
-
     case 'delete':
         if (empty($_POST['ok'])) {
-
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             if (!$GLOBALS['xoopsSecurity']->check(false)) {
                 $err = 'Ticket Error <br>';
                 $err .= $GLOBALS['xoopsSecurity']->getErrors();
@@ -383,19 +356,18 @@ switch ($op) {
 
             adminHtmlHeader('forms.php');
 
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             //            xoops_confirm(array('op' => 'delete', 'form_id' => $_GET['form_id'], 'ok' => 1), _LIAISE_ADMIN_URL, _AM_FORM_CONFIRM_DELETE);
             $ticket = $GLOBALS['xoopsSecurity']->createToken();
             xoops_confirm([
                               'op'             => 'delete',
                               'form_id'        => $_GET['form_id'],
                               'ok'             => 1,
-                              'XOOPS_G_TICKET' => $ticket
+                              'XOOPS_G_TICKET' => $ticket,
                           ], _LIAISE_ADMIN_URL . 'forms.php', _AM_FORM_CONFIRM_DELETE);
-        // ------
+            // ------
         } else {
-
-            // --- GIJOE's Ticket Class ---
+            // --- Security Check ---
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 $err = 'Ticket Error <br>';
                 $err .= $GLOBALS['xoopsSecurity']->getErrors();
@@ -407,18 +379,17 @@ switch ($op) {
             if (empty($form_id)) {
                 redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 0, _AM_NOTHING_SELECTED);
             }
-            $form =& $liaise_form_mgr->get($form_id);
+            $form = &$liaise_form_mgr->get($form_id);
             $liaise_form_mgr->delete($form);
-            $liaise_ele_mgr = xoops_getModuleHandler('elements');
+            $liaise_ele_mgr = $helper->getHandler('Elements');
             $criteria       = new \Criteria('form_id', $form_id);
             $liaise_ele_mgr->deleteAll($criteria);
             $liaise_form_mgr->deleteFormPermissions($form_id);
             redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 0, _AM_DBUPDATED);
         }
         break;
-
     case 'saveorder':
-        // --- GIJOE's Ticket Class ---
+        // --- Security Check ---
         if (!$GLOBALS['xoopsSecurity']->check()) {
             $err = 'Ticket Error <br>';
             $err .= $GLOBALS['xoopsSecurity']->getErrors();
@@ -432,15 +403,14 @@ switch ($op) {
         extract($_POST, EXTR_OVERWRITE);
         foreach ($ids as $id) {
             $id   = (0 == $id) ? '0' : $id;
-            $form =& $liaise_form_mgr->get($id);
+            $form = &$liaise_form_mgr->get($id);
             $form->setVar('form_order', $order[$id]);
             $liaise_form_mgr->insert($form);
         }
         redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 0, _AM_DBUPDATED);
         break;
-
     case 'saveform':
-        // --- GIJOE's Ticket Class ---
+        // --- Security Check ---
         if (!$GLOBALS['xoopsSecurity']->check()) {
             $err = 'Ticket Error <br>';
             $err .= $GLOBALS['xoopsSecurity']->getErrors();
@@ -475,13 +445,13 @@ switch ($op) {
                 $liaise_form_mgr->insertFormPermissions($ret, $form_group_perm);
             }
             if (!empty($clone_form_id)) {
-                $liaise_ele_mgr = xoops_getModuleHandler('elements');
+                $liaise_ele_mgr = $helper->getHandler('Elements');
                 $criteria       = new \Criteria('form_id', $clone_form_id);
                 $count          = $liaise_ele_mgr->getCount($criteria);
                 if ($count > 0) {
                     $elements = $liaise_ele_mgr->getObjects($criteria);
                     foreach ($elements as $e) {
-                        $cloned =& $e->xoopsClone();
+                        $cloned = &$e->xoopsClone();
                         $cloned->setVar('form_id', $ret);
                         if (!$liaise_ele_mgr->insert($cloned)) {
                             $error .= $cloned->getHtmlErrors();
@@ -489,7 +459,7 @@ switch ($op) {
                     }
                 }
             } elseif (empty($form_id)) {
-                $liaise_ele_mgr = xoops_getModuleHandler('elements');
+                $liaise_ele_mgr = $helper->getHandler('Elements');
                 $error          = $liaise_ele_mgr->insertDefaults($ret);
             }
         }
@@ -497,7 +467,7 @@ switch ($op) {
             adminHtmlHeader('forms.php');
             echo $error;
         } else {
-            if (isset($_POST['submit2'])) {
+            if (\Xmf\Request::hasVar('submit2', 'POST')) {
                 redirect_header(LIAISE_URL . 'admin/elements.php?form_id=' . $ret, 0, _AM_DBUPDATED);
             } else {
                 redirect_header(_LIAISE_ADMIN_URL . 'forms.php', 0, _AM_DBUPDATED);
@@ -506,5 +476,5 @@ switch ($op) {
         break;
 }
 
-include __DIR__ . '/footer.php';
+require_once __DIR__ . '/footer.php';
 xoops_cp_footer();

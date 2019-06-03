@@ -1,50 +1,41 @@
 <?php
-// 2006-12-20 K.OHWADA
-// use GIJOE's Ticket Class
 
-//
-###############################################################################
-##                Liaise -- Contact forms generator for XOOPS                ##
-##                 Copyright (c) 2003-2005 NS Tai (aka tuff)                 ##
-##                       <http://www.brandycoke.com>                        ##
-###############################################################################
-##                   XOOPS - PHP Content Management System                   ##
-##                       Copyright (c) 2000-2016 XOOPS.org                        ##
-##                          <https://xoops.org>                          ##
-###############################################################################
-##  This program is free software; you can redistribute it and/or modify     ##
-##  it under the terms of the GNU General Public License as published by     ##
-##  the Free Software Foundation; either version 2 of the License, or        ##
-##  (at your option) any later version.                                      ##
-##                                                                           ##
-##  You may not change or alter any portion of this comment or credits       ##
-##  of supporting developers from this source code or any supporting         ##
-##  source code which is considered copyrighted (c) material of the          ##
-##  original comment or credit authors.                                      ##
-##                                                                           ##
-##  This program is distributed in the hope that it will be useful,          ##
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of           ##
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            ##
-##  GNU General Public License for more details.                             ##
-##                                                                           ##
-##  You should have received a copy of the GNU General Public License        ##
-##  along with this program; if not, write to the Free Software              ##
-##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA ##
-###############################################################################
-##  Author of this file: NS Tai (aka tuff)                                   ##
-##  URL: http://www.brandycoke.com/                                          ##
-##  Project: Liaise                                                          ##
-###############################################################################
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ *
+ * @copyright   2003-2005 NS Tai (aka tuff) http://www.brandycoke.com
+ * @copyright   2003-2019 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      NS Tai (aka tuff) URL: http://www.brandycoke.com/
+ * @author      Kenichi OHWADA, http://linux2.ohwada.net/, Email:  webmaster@ohwada.jp
+ * @author      Patrice BOUTHIER, contact@informatux.com, https://informatux.com/
+ * @author      Michael Beck (aka Mamba), XOOPS Development Team
+ * @package     Liaise -- Contact forms generator for XOOPS
+ */
 
 use XoopsModules\Liaise;
 
+include dirname(__DIR__) . '/preloads/autoloader.php';
+
 // includes
-include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include  dirname(__DIR__) . '/include/common.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(__DIR__) . '/include/common.php';
 define('LIAISE_ADMIN_URL', LIAISE_URL . 'admin/index.php');
 define('_LIAISE_ADMIN_URL', LIAISE_URL . 'admin/');
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once __DIR__ . '/header.inc.php';
+
+/** @var \XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler = xoops_getHandler('groupperm');
 
 // --- INFORMATUX ---
 if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
@@ -57,7 +48,7 @@ if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/m
 $helper = Liaise\Helper::getInstance();
 $helper->loadLanguage('modinfo');
 
-/** @var XoopsModuleHandler $moduleHandler */
+/** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler   = xoops_getHandler('module');
 $moduleInfo      = $moduleHandler->get($xoopsModule->getVar('mid'));
 $pathModuleAdmin = $xoopsModule->getInfo('dirmoduleadmin');
@@ -67,7 +58,7 @@ $pathIcon16      = \Xmf\Module\Admin::iconUrl('', 32);
 $myts = \MyTextSanitizer::getInstance();
 // --------
 
-// --- GIJOE's Ticket Class ---
+// --- Security Check ---
 //require_once LIAISE_ROOT_PATH . 'include/gtickets.php';
 // ------
 
@@ -137,7 +128,7 @@ function adminHtmlHeader($navigation = 'index.php')
             break;
         case 'editelement.php':
         case 'elements.php':
-            //
+
             break;
         case 'about.php':
             $adminObject->displayAbout();
@@ -188,14 +179,14 @@ function formatDate($date)
 
 function truncate($string, $max_length = 30, $replacement = '', $trunc_at_space = false)
 {
-    $max_length    -= strlen($replacement);
-    $string_length = strlen($string);
+    $max_length    -= mb_strlen($replacement);
+    $string_length = mb_strlen($string);
 
     if ($string_length <= $max_length) {
         return $string;
     }
 
-    if ($trunc_at_space && ($space_position = strrpos($string, ' ', $max_length - $string_length))) {
+    if ($trunc_at_space && ($space_position = mb_strrpos($string, ' ', $max_length - $string_length))) {
         $max_length = $space_position;
     }
 

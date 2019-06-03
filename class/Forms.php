@@ -1,5 +1,7 @@
 <?php
 
+namespace XoopsModules\Liaise;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -21,18 +23,26 @@
  * @author      Michael Beck (aka Mamba), XOOPS Development Team
  * @package     Liaise -- Contact forms generator for XOOPS
  */
-require_once __DIR__ . '/admin_header.php';
-$file = isset($_GET['f']) ? trim($_GET['f']) : '';
-$path = LIAISE_UPLOAD_PATH . $file;
-if (!$file || !preg_match('/^[0-9]+_{1}[0-9a-z]+\.[0-9a-z]+$/', $file) || !file_exists($path)) {
-    redirect_header(XOOPS_URL, 0, _AM_NOTHING_SELECTED);
+
+if (!defined('LIAISE_ROOT_PATH')) {
+    exit();
 }
 
-header('Content-Type: application/octet-stream');
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Cache-Control: private, no-cache');
-header('Pragma: no-cache');
-header('Content-Disposition: attachment; filename="' . $file . '"');
-header('Content-Length: ' . filesize($path));
-
-readfile($path);
+class Forms extends \XoopsObject
+{
+    public function __construct()
+    {
+        parent::__construct();
+        //    key, data_type, value, req, max, opt
+        $this->initVar('form_id', XOBJ_DTYPE_INT);
+        $this->initVar('form_send_method', XOBJ_DTYPE_TXTBOX, 'e', true, 1);
+        $this->initVar('form_send_to_group', XOBJ_DTYPE_TXTBOX, 1, false, 3);
+        $this->initVar('form_order', XOBJ_DTYPE_INT, 1, false, 3);
+        $this->initVar('form_delimiter', XOBJ_DTYPE_TXTBOX, 's', true, 1);
+        $this->initVar('form_title', XOBJ_DTYPE_TXTBOX, '', true, 255);
+        $this->initVar('form_submit_text', XOBJ_DTYPE_TXTBOX, _SUBMIT, true, 50);
+        $this->initVar('form_desc', XOBJ_DTYPE_TXTAREA);
+        $this->initVar('form_intro', XOBJ_DTYPE_TXTAREA);
+        $this->initVar('form_whereto', XOBJ_DTYPE_TXTBOX);
+    }
+}

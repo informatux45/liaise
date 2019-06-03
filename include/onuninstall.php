@@ -12,11 +12,10 @@ use XoopsModules\Liaise;
 
 /**
  * Prepares system prior to attempting to uninstall module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to uninstall, false if not
  */
-
 function xoops_module_pre_uninstall_liaise(\XoopsModule $module)
 {
     // Do some synchronization
@@ -24,9 +23,8 @@ function xoops_module_pre_uninstall_liaise(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during uninstallation of the module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if uninstallation successful, false if not
  */
@@ -35,8 +33,9 @@ function xoops_module_uninstall_liaise(\XoopsModule $module)
     //    return true;
 
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = strtoupper($moduleDirName);
-    $helper             = Liaise\Helper::getInstance();
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+    /** @var Liaise\Helper $helper */
+    $helper = Liaise\Helper::getInstance();
 
     /** @var Liaise\Utility $utility */
     $utility = new Liaise\Utility();

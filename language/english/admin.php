@@ -1,19 +1,20 @@
 <?php
 define('_AM_LIAISE_MODULEADMIN_MISSING', 'The ModuleAdmin class is not installed, install it on your xoops.<br>/Frameworks/moduleclasses/moduleadmin/');
 defined('_AM_DBUPDATED') or define('_AM_DBUPDATED', 'Database updated!');
+defined('_AM_DBERROR') or define('_AM_DBERROR', 'Error database update!');
 
-//
 define('_AM_SAVE', 'Save');
 define('_AM_COPIED', '%s copied');
 define('_AM_ELE_CREATE', 'Create form element');
 define('_AM_ELE_EDIT', 'Edit form elements: %s');
+define('_AM_ELE_VIEW', 'View');
 
 define('_AM_ELE_CAPTION', 'Title');
 define('_AM_ELE_DEFAULT', 'Default value');
 define('_AM_ELE_DETAIL', 'Detail');
 define('_AM_ELE_REQ', 'Required');
 define('_AM_ELE_ORDER', 'Sort');
-define('_AM_ELE_DISPLAY', 'Display');
+define('_AM_ELE_DISPLAY', 'Show');
 
 define('_AM_ELE_TEXT', 'Textbox');
 define('_AM_ELE_TEXT_DESC', '{UNAME} displays the username<br>{EMAIL} displays the email address');
@@ -71,13 +72,13 @@ define('_AM_FORM_ACTION_EDITELEMENT', 'Edit form elements');
 define('_AM_FORM_ACTION_CLONE', 'Clone form');
 define('_AM_FORM_ACTION_ARCHIVE', 'View messages');
 
-define('_AM_FORM_NEW', 'Cretate a new form');
+define('_AM_FORM_NEW', 'Create a new form');
 define('_AM_FORM_EDIT', 'Edit form: %s');
 define('_AM_FORM_CONFIRM_DELETE', 'Are you sure you want to delete this form and all form elements?');
 
 define('_AM_ID', 'ID');
 define('_AM_ACTION', 'Action');
-define('_AM_RESET_ORDER', 'Order upadte');
+define('_AM_RESET_ORDER', 'Order update');
 define('_AM_SAVE_THEN_ELEMENTS', 'Save then change the elements');
 define('_AM_SAVE_THEN_FORM', 'Save then change the form settings');
 define('_AM_NOTHING_SELECTED', 'No selection.');
@@ -114,6 +115,19 @@ define('_AM_XLIAISE_INDEX_ACTIVATED_FORM', "Activated Form: <span style='color: 
 define('_AM_XLIAISE_INDEX_ACTIVATED_FORMS', "Activated Forms: <span style='color: green; font-weight: bold;'>%s</span>");
 define('_AM_XLIAISE_INDEX_OFFLINE_FORM', "Offline Form: <span style='color: red; font-weight: bold;'>%s</span>");
 define('_AM_XLIAISE_INDEX_OFFLINE_FORMS', "Offline Forms: <span style='color: red; font-weight: bold;'>%s</span>");
+
+
+define('_AM_XLIAISE_ARCHIVE_ALL_POSTED_MSG', 'All Posted Messages on forms');
+define('_AM_XLIAISE_ARCHIVE_ALL_DATE', 'Date');
+define('_AM_XLIAISE_ARCHIVE_ALL_FORM', 'Formu');
+define('_AM_XLIAISE_ARCHIVE_ALL_MESSAGE', 'Message');
+define('_AM_XLIAISE_ARCHIVE_ALL_NO_MSG', 'No message for forms');
+
+define('_AM_XLIAISE_ARCHIVE_VIEW_DATE', 'Date');
+define('_AM_XLIAISE_ARCHIVE_VIEW_FORM', 'Form');
+define('_AM_XLIAISE_ARCHIVE_VIEW_MESSAGE', 'Message');
+
+define('_AM_XLIAISE_ARCHIVE_DELETE_CONFIRM', 'Are you sure you want to delete this message?');
 
 define('_AM_XLIAISE_NO_MESSAGES', 'No messages for the form');
 

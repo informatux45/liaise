@@ -13,7 +13,7 @@
  *
  * INSTALLATION
  *
- * Place the files anywhere you wish, preferrably in separate folder in some
+ * Place the files anywhere you wish, preferably in separate folder in some
  * directory from where you include scripts. ( This folder would be referred as
  * $APP_ROOT.)
  *
@@ -77,7 +77,6 @@ class captcha_x
      * Generates the image and puts md5 hash into the session
      *
      * @access public
-     * @return void
      */
     public function handle_request()
     {
@@ -101,7 +100,7 @@ class captcha_x
      *
      * @param string $user_string
      * @access public
-     * @return boolean
+     * @return bool
      */
     public function validate($user_string)
     {
@@ -109,7 +108,7 @@ class captcha_x
         session_start();
 
         if (!$case_sensitive) {
-            $user_string = strtolower($user_string);
+            $user_string = mb_strtolower($user_string);
         }
 
         $md5 = md5($user_string);
@@ -125,7 +124,6 @@ class captcha_x
      *
      * @param string $color -- rgb color representation, see captcha_x.ini
      * @access private
-     * @return void
      */
     private function _add_dust_and_scratches($color)
     {
@@ -193,7 +191,6 @@ class captcha_x
      * define the fonts, their sizes, letter angle and letterr colors
      *
      * @access private
-     * @return void
      */
     private function _print_letters()
     {
@@ -226,7 +223,7 @@ class captcha_x
             unset($a);
         }
 
-        // sem pridat podporu pro #xxx a #liaisex resolve_color()
+        // sem pridat podporu pro #xxx a #xxxxxx resolve_color()
         $fg_colors_count = (count($fg_colors) - 1);
         foreach ($fg_colors as $fg_color) {
             $a[] = $this->_split($fg_color);
@@ -258,7 +255,6 @@ class captcha_x
      * Puts the md5 hash into session
      *
      * @access private
-     * @return void
      */
     private function _put_md5_into_session()
     {
@@ -268,7 +264,7 @@ class captcha_x
         $string = implode('', $this->letters);
 
         if (!$case_sensitive) {
-            $string = strtolower($string);
+            $string = mb_strtolower($string);
         }
 
         $md5                 = md5($string);
@@ -279,7 +275,7 @@ class captcha_x
      * Splits string into an array by comma and spaces
      *
      * @access private
-     * @param  string $s to be split
+     * @param string $s to be split
      * @return array
      */
     private function _split($s)
