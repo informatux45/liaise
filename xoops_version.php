@@ -36,7 +36,7 @@
 $liaise_dirname               = basename(dirname(__FILE__));
 
 $modversion['name']           = _MI_LIAISE_NAME;
-$modversion['version']        = '2.00';
+$modversion['version']        = '2.01';
 $modversion['description']    = _MI_LIAISE_DESC;
 $modversion['author']         = "NS Tai (aka tuff)";
 $modversion['credits']        = "<a href='http://www.brandycoke.com/' target='_blank'>Brandycoke Productions</a>";
