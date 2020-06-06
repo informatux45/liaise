@@ -1,4 +1,39 @@
 =================================================
+Version 2.01
+Author : INFORMATUX / Mamba
+URL    : https://dev.informatux.com
+=================================================
+
+Support PHP7
+Notice [PHP]: Only variable references should be returned by reference
+- class/elements.php
+
+Xoops version
+- Only for XOOPS 2.5.8 and up
+- Updated infos
+
+=================================================
+Version 2.00
+Author : INFORMATUX
+URL    : https://dev.informatux.com
+=================================================
+
+[ADMIN] Compatible avec le Framework "Module Classes" 1.1
+[ADMIN] Ajout d'un controle de l'affichage du Breadcrumb dans les préférences (Option OUI/NON)
+[ADMIN] Ajout d'un élément de formulaire (BREAK ou SEPARATEUR) qui permet de fractionner les formulaires avec thématiques de questions
+[ADMIN] Ajout d'une section "Tous les messages"
+[ADMIN] Tous les messages saisis dans les formulaires sont stockés en base de données
+[ADMIN] Visualisation des messages reçus depuis l'administration
+[ADMIN] Ajout d'une feuille de style Liaise (css/xliaise_style.css)
+[ADMIN] Refonte de l'icon LIAISE
+[ADMIN] Nombreuses corrections bugs (ex: mauvaises soumissions de certains formulaires)
+[ADMIN] Titre des formulaires dans les tableaux
+[ADMIN] Modification de l'architecture des dossiers suivant le nouveau modele XOOPS
+[ADMIN] Passage en version 2.00, c'est plus sympa comme chiffre ;-)
+[CLIENT] Ajout du nouvel élément (BREAK ou SEPARATEUR)
+Version 1.27
+
+=================================================
 Version: 1.27
 Date:   2006-12-24
 Author: Kenichi OHWADA
@@ -43,10 +78,3 @@ admin can choice use or not use in admin page
 (4) [Japanese] bug fix: wrong charset
 changed charset EUC-JP to ISO-2022-JP
 - xoops_version.php
-
-(5) support PHP7
-Notice [PHP]: Only variable references should be returned by reference
-- class/elements.php
-
-(6) Xoops version
-Only for XOOPS 2.5.8 and up
